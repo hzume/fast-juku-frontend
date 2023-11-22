@@ -3,17 +3,20 @@
 import { ReactNode } from 'react'
 import { useSession } from 'next-auth/react'
 import { LogoutButton } from './AuthenticateButton'
+import { signIn } from 'next-auth/react'
 import Link from 'next/link'
 
 export const PageLayout = ({ children }: { children: ReactNode }) => {
-    const { data: session } = useSession()
-    if (!session) {
-        return (
-            <div>
-                {children}
-            </div>
-        )
+    const { data: session, status } = useSession(
+        { required: true,
+          onUnauthenticated() {
+            signIn()
+          },
+        })
+    if (status === 'loading') {
+        return <div>Loading...</div>
     }
+
     return (
         <>
         <div className="navbar bg-base-100">

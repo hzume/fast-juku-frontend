@@ -6,17 +6,7 @@ import { LoginButton, LogoutButton } from '@/components/AuthenticateButton'
 import { stat } from 'fs'
 
 export default function Home() {
-  const { data: session, status } = useSession(
-    { required: true,
-      onUnauthenticated() {
-        signIn()
-      },
-    }
-  )
-
-  if (status === 'loading') {
-    return <div>Loading...</div>
-  }
+  const { data: session, status } = useSession()
 
   return (
     <main className='flex h-screen justify-center items-center'>

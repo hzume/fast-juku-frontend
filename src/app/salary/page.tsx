@@ -5,12 +5,8 @@ import { useSession } from 'next-auth/react';
 import { signIn } from 'next-auth/react';
 
 export default function Page() {
-    const { data: session, status } = useSession({ required: true, onUnauthenticated() {
-            signIn();
-        }, });
-    if (status === 'loading') {
-        return <div>Loading...</div>;
-    }
+    const { data: session, status } = useSession();
+
     return ( 
         <div className='w-full max-w-full'>
             <span>時間割表</span>
