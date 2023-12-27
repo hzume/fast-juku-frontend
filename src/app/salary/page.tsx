@@ -1,17 +1,21 @@
 "use client"
 
-import React from 'react';
-import { useSession } from 'next-auth/react';
-import { signIn } from 'next-auth/react';
+import React, { useState } from 'react';
+import { read } from "xlsx";
+import { processXLSX } from '@/app/myfunctions';
+import { C } from '@/app/const';
+import { useUser } from '@/providers/UserContext';
+import { Meeting } from '@/app/types/meeting';
+import { Form } from './components/Form';
+import { MeetingList } from './components/MeetingList';
 
 export default function Page() {
-    const { data: session, status } = useSession();
+	const [meetings, setMeetings] = useState<Meeting[]>([])
 
-    return ( 
-        <div className='w-full max-w-full'>
-            <span>時間割表</span>
-            <input type="file" className="file-input file-input-bordered w-1/2 max-w-full" />
-            <span className="label-text">ミーティングを追加</span>
-        </div>
-    );
+	return (
+		<div className='md:flex gap-4'>
+			<Form meetings={meetings} setMeetings={setMeetings} />
+			<MeetingList meetings={meetings} setMeetings={setMeetings}/>
+		</div>
+	);
 }

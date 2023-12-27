@@ -1,7 +1,8 @@
-import NextAuth from 'next-auth';
+import { C } from '@/app/const';
+import NextAuth, { NextAuthOptions } from 'next-auth';
 import CognitoProvider from "next-auth/providers/cognito"
 
-const handler = NextAuth({
+export const authOptions: NextAuthOptions = {
     secret: process.env.NEXTAUTH_SECRET,
     providers: [
         CognitoProvider({
@@ -10,7 +11,26 @@ const handler = NextAuth({
         issuer: process.env.COGNITO_ISSUER ?? '',
         // checks: 'nonce',
         })
-    ]
-})
+    ],
+    callbacks: {
+        session: async ({ session, token }) => {
+          if (session?.user) {
+            session.user.id = token.uid;
+          }
+          return session;
+        },
+        jwt: async ({ user , token }) => {
+          if (user) {
+            token.uid = user.id;
+          }
+          return token;
+        },
+      },
+      session: {
+        strategy: 'jwt',
+      },
+}
+
+const handler = NextAuth(authOptions)
 
 export { handler as GET, handler as POST }
