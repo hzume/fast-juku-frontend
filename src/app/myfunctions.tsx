@@ -25,11 +25,6 @@ export function useTeacherList(school_id?: string) {
     const query = new URLSearchParams({ school_id: school_id ?? '' });
     const api_url = new URL(`teachers/?${query}`, C.API_PATH)
     const fetcher = (url: string) => fetch(url).then(res => res.json())
-    try {
-        const { data, error, isLoading } = useSWR(api_url.href, fetcher)
-        return { data, error, isLoading }
-    }  
-    catch (error) {
-        return { data: [], error: error, isLoading: true }
-    }
+    const { data, error, isLoading } = useSWR(api_url.href, fetcher)
+    return { data, error, isLoading }
 }
