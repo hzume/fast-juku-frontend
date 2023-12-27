@@ -10,8 +10,9 @@ import { useTeacherList } from "@/app/myfunctions";
 export default function Page() {
     const user = useUser();
     const { data: teacherList, error, isLoading } = useTeacherList(user?.school_id)
-    if (!user) return <span className="loading loading-lg"></span>
 
+    if (!user) return <span className="loading loading-lg"></span>
+    if (isLoading) return <span className="loading loading-lg"></span>
     if (error) return <div>{error}</div>;
     
     return (

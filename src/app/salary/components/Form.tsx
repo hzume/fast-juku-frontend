@@ -6,23 +6,22 @@ import { useUser } from "@/providers/UserContext";
 import { read } from "xlsx";
 import { useTeacherList, processXLSX } from "@/app/myfunctions";
 import { C } from "@/app/const";
+import { Teacher } from "@/app/types/teacher";
 
 export const Form = ({
+    teacherList,
     meetings,
     setMeetings,
 }: {
+    teacherList: Teacher[],
     meetings: Meeting[],
     setMeetings: Dispatch<SetStateAction<Meeting[]>>,
 }
 ) => {
     const [formValues, setFormValues] = useState<{ year: string, month: string, file: File | null }>({ year: '', month: '', file: null });
     const user = useUser();
-    const { data: teacherList, error, isLoading } = useTeacherList(user?.school_id)
 
     if (!user) return <span className="loading loading-lg"></span>
-    if (error) return <div>{error}</div>;
-    if (isLoading) return <span className="loading loading-lg"></span>
-
     
     const onChangeText = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
