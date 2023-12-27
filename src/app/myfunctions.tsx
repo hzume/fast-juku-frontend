@@ -22,10 +22,14 @@ export function processXLSX(wb: Xlsx.WorkBook, year: number, month: number) {
 }
 
 export function useTeacherList(school_id?: string) {
-    if (!school_id) return { data: [], error: null, isLoading: true }
-    const query = new URLSearchParams({ school_id: school_id });
+    const query = new URLSearchParams({ school_id: school_id ?? '' });
     const api_url = new URL(`teachers/?${query}`, C.API_PATH)
     const fetcher = (url: string) => fetch(url).then(res => res.json())
-    const { data, error, isLoading } = useSWR(api_url.href, fetcher)
-    return { data, error, isLoading }
+    try {
+        const { data, error, isLoading } = useSWR(api_url.href, fetcher)
+        return { data, error, isLoading }
+    }  
+    catch (error) {
+        return { data: [], error: error, isLoading: true }
+    }
 }
