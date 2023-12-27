@@ -21,7 +21,8 @@ export function processXLSX(wb: Xlsx.WorkBook, year: number, month: number) {
     return xlsx_data
 }
 
-export function useTeacherList(school_id: string) {
+export function useTeacherList(school_id?: string) {
+    if (!school_id) return { data: [], error: null, isLoading: true }
     const query = new URLSearchParams({ school_id: school_id });
     const api_url = new URL(`teachers/?${query}`, C.API_PATH)
     const fetcher = (url: string) => fetch(url).then(res => res.json())

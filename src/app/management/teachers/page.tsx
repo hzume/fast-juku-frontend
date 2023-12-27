@@ -8,11 +8,9 @@ import useSWR from "swr";
 import { useTeacherList } from "@/app/myfunctions";
 
 export default function Page() {
-    // const [teacherList, setTeacherList] = useState<Teacher[]>([]);
     const user = useUser();
+    const { data: teacherList, error, isLoading } = useTeacherList(user?.school_id)
     if (!user) return <span className="loading loading-lg"></span>
-    
-    const { data: teacherList, error, isLoading } = useTeacherList(user.school_id)
 
     if (error) return <div>{error}</div>;
     

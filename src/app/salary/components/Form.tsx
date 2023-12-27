@@ -17,9 +17,9 @@ export const Form = ({
 ) => {
     const [formValues, setFormValues] = useState<{ year: string, month: string, file: File | null }>({ year: '', month: '', file: null });
     const user = useUser();
-    if (!user) return <span className="loading loading-lg"></span>
+    const { data: teacherList, error, isLoading } = useTeacherList(user?.school_id)
 
-    const { data: teacherList, error, isLoading } = useTeacherList(user.school_id)
+    if (!user) return <span className="loading loading-lg"></span>
     if (error) return <div>{error}</div>;
     if (isLoading) return <span className="loading loading-lg"></span>
 
