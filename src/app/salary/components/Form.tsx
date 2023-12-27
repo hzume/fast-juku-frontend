@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { showCreateMeetingModal } from "./CreateMeetingModal";
 import { useUser } from "@/providers/UserContext";
 import { read } from "xlsx";
-import { getTeacherList, processXLSX } from "@/app/myfunctions";
+import { useTeacherList, processXLSX } from "@/app/myfunctions";
 import { C } from "@/app/const";
 
 export const Form = ({
@@ -19,7 +19,7 @@ export const Form = ({
     const user = useUser();
     if (!user) return <span className="loading loading-lg"></span>
 
-    const { data: teacherList, error, isLoading } = getTeacherList(user.school_id)
+    const { data: teacherList, error, isLoading } = useTeacherList(user.school_id)
     if (error) return <div>{error}</div>;
     if (isLoading) return <span className="loading loading-lg"></span>
 
