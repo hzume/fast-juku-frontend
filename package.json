@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "export": "next build && next export",
+    "serve": "npm run export && serve ./out"
   },
   "dependencies": {
     "encoding-japanese": "^2.0.0",
@@ -15,6 +17,7 @@
     "next-ssr": "^0.0.9",
     "react": "^18",
     "react-dom": "^18",
+    "serve": "^14.2.1",
     "sheetjs": "^2.0.0",
     "swr": "^2.2.4",
     "xlsx": "^0.18.5"
