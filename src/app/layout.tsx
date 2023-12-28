@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import NextAuthProvider from '@/providers/NextAuth'
 import { PageLayout } from '@/components/PageLayout'
 import { DataFetch } from '@/providers/DataFetch'
 import { ModalManager } from '@/components/Modal'
@@ -18,12 +17,12 @@ export default function RootLayout({ children, }: { children: React.ReactNode })
   return (
     <html lang="ja">
       <body className={inter.className}>
-        <DataFetch>
+        {/* <DataFetch> */}
           <PageLayout>
             <ModalManager />
             {children}
           </PageLayout>
-        </DataFetch>
+        {/* </DataFetch> */}
       </body>
     </html>
   )

@@ -9,7 +9,7 @@ import { useUser } from '@/providers/UserContext'
 
 export const PageLayout = ({ children }: { children: ReactNode }) => {
     const user = useUser();
-    if (!user) return <>Loading</>
+    if (!user) return <span className="loading loading-lg"></span>
     return (
         <>
             <NavBar />
