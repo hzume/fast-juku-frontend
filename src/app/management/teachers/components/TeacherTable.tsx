@@ -23,7 +23,6 @@ const ShowDeleteModalButton = ({ teacher }: { teacher: Teacher }) => {
 }
 
 export const TeacherTable = ({ teacherList, isLoading }: { teacherList: Teacher[], isLoading: boolean }) => {
-    const current_url = usePathname();
     const TeacherRow = ({ teacher }: { teacher: Teacher }) => {
         const name = `${teacher.family_name} ${teacher.given_name}`;
         return (

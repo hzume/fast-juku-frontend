@@ -1,8 +1,10 @@
+"use client"
 import { C } from "@/app/const";
 import { Teacher } from "@/app/types/teacher"
 import showLoadingModal from "@/components/LoadingModal";
 import { closeModal, showModal } from "@/components/Modal";
 import { showDeleteResultModal } from "./DeleteResultModal";
+import { useApiPath } from "@/providers/ApiPathContext";
 
 
 export const showDeleteModal = (teacher: Teacher) => {
@@ -13,9 +15,10 @@ export const showDeleteModal = (teacher: Teacher) => {
 };
 
 const DeleteModalContent = ({ teacher }: { teacher: Teacher }) => {
+    const API_PATH = useApiPath();
     const name = `${teacher.family_name} ${teacher.given_name}`;
     const deleteTeacher = () => {
-        const api_url = new URL(`/teachers/${teacher.id}`, C.API_PATH);
+        const api_url = new URL(`/teachers/${teacher.id}`, API_PATH);
         showLoadingModal()
         fetch(api_url.href, {
             method: 'DELETE',

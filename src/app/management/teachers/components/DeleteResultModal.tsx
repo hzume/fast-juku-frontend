@@ -2,6 +2,7 @@
 import { C } from "@/app/const"
 import { Teacher } from "@/app/types/teacher"
 import { closeModal, showModal } from "@/components/Modal"
+import { useApiPath } from "@/providers/ApiPathContext"
 import { useUser } from "@/providers/UserContext"
 import { useSWRConfig } from "swr"
 
@@ -19,10 +20,11 @@ export const showDeleteResultModal = (
 const DeleteResultModalContent = ({teacher}:{teacher: Teacher}) => {
     const { mutate } = useSWRConfig()
     const user = useUser()
+    const API_PATH = useApiPath()
     if (!user) return <span className="loading loading-spinner loading-lg"></span>
 
     const query = new URLSearchParams({ school_id: user.school_id });
-    const api_url = new URL(`teachers/?${query}`, C.API_PATH)
+    const api_url = new URL(`teachers/?${query}`, API_PATH)
 
     const onClick = () => {
         closeModal()

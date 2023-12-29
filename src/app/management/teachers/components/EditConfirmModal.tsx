@@ -1,8 +1,10 @@
+"use client"
 import { C } from "@/app/const"
 import { Teacher, TeacherBase } from "@/app/types/teacher"
 import showLoadingModal from "@/components/LoadingModal";
 import { closeModal, showModal } from "@/components/Modal"
 import { showEditResultModal } from "./EditResultModal";
+import { useApiPath } from "@/providers/ApiPathContext";
 
 
 export const showEditConfirmModal = (
@@ -19,6 +21,8 @@ export const EditConfirmModalContent = (
     { teacher, editedTeacher }
         : { teacher: Teacher, editedTeacher: Teacher }
 ) => {
+    const API_PATH = useApiPath()
+
     const isDifferent = {
         display_name: editedTeacher?.display_name !== teacher?.display_name,
         family_name: editedTeacher?.family_name !== teacher?.family_name,
@@ -38,7 +42,7 @@ export const EditConfirmModalContent = (
 
     const updateTeacher = async () => {
         if (!editedTeacher) return
-        const api_url = new URL(`teachers/${teacher.id}`, C.API_PATH)
+        const api_url = new URL(`teachers/${teacher.id}`, API_PATH)
         const newTeacherBase: TeacherBase = {
             school_id: editedTeacher.school_id,
             display_name: editedTeacher.display_name,

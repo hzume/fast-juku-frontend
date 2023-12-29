@@ -4,18 +4,21 @@ import { User } from "@/app/types/user";
 import { SignIn } from "@/components/SignIn";
 import { getServerSession } from "next-auth";
 import { UserProvider } from "./UserContext";
+import { TeacherBase } from "@/app/types/teacher";
+import { ApiPathProvider } from "./ApiPathContext";
 
 
-export const DataFetch = async ({ children }: {children: React.ReactNode}) => {
+export const DataFetch = async ({ children }: { children: React.ReactNode }) => {
     const session = await getServerSession(authOptions);
     if (!session) {
         return <SignIn />
     }
-    // @ts-ignore
-    const sub = session.user?.id; 
-    const api_url = new URL(`teachers/sub/${sub}`, C.API_PATH)
+    //@ts-ignore 
+    const sub = session.user?.id;
+    const api_url = new URL(`teachers/sub/${sub}`, process.env.API_PATH)
+    console.log(api_url.href)
     const res = await fetch(api_url.href, {
-        method: 'GET',
+        method: "GET"
     });
     const data = await res.json();
     const user: User = {
@@ -27,7 +30,9 @@ export const DataFetch = async ({ children }: {children: React.ReactNode}) => {
 
     return (
         <UserProvider user={user}>
-            {children}
+            <ApiPathProvider API_PATH={process.env.API_PATH}>
+                {children}
+            </ApiPathProvider>
         </UserProvider>
     )
 }

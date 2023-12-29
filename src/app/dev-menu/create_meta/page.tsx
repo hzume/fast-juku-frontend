@@ -1,33 +1,33 @@
 "use client";
-import React from "react";
+import { C } from "@/app/const";
+import { useApiPath } from "@/providers/ApiPathContext";
+import React, { use } from "react";
 
 export default function Page() {
-    const [formValues, setFormValues] = React.useState<{school_name: string}>({ school_name: ""});
-
-    const onChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = event.target;
-        setFormValues({ ...formValues, [name]: value });
-    }
-
+    const API_PATH = useApiPath();
     const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const fd = new FormData();
-        fd.append('school_name', formValues.school_name);
+        const form = event.currentTarget;
+        const data_form = Object.fromEntries(new FormData(form));
+        const api_url = new URL(`metas`, API_PATH)
         try {
-            const res = await fetch(`http://localhost:3000/metas`, {
+            const res = await fetch(api_url, {
                     method: 'POST',
-                    body: fd,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data_form),
                 });
             const json = await res.json();
             console.log(json);
         } catch (error) {
             console.error(error);
-            console.log(formValues)
+            console.log(data_form)
         }
     }
     return (
         <form className="form-control" onSubmit={onSubmit}>
-            <input type="text" name='school_name' onChange={onChangeName} placeholder="type school_name" className="input w-full max-w-xs"/>
+            <input type="text" name='school_name' placeholder="type school_name" className="input w-full max-w-xs"/>
             <button type="submit" className="btn btn-primary">Submit</button>
         </form>
     )

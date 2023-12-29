@@ -1,10 +1,14 @@
 "use client"
 
-import React from 'react';
+import React, { use, useState } from 'react';
 import { C } from '@/app/const';
+import csv  from 'csvtojson';
+import { Readable } from 'stream';
+import { useApiPath } from '@/providers/ApiPathContext';
 
 export default function Page() {
-    const [formValues, setFormValues] = React.useState<{school_id: string, file: File | null}>({ school_id: '', file: null});
+    const [formValues, setFormValues] = useState<{school_id: string, file: File | null}>({ school_id: '', file: null});
+    const API_PATH = useApiPath();
 
     const onChangeId = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
@@ -22,10 +26,11 @@ export default function Page() {
         event.preventDefault();
         const fd = new FormData();
         fd.append('file', formValues.file!);
+        
         const query = new URLSearchParams({
             school_id: formValues.school_id,
         });
-        const api_url = new URL(`teachers/bulk/?${query}`, C.API_PATH)
+        const api_url = new URL(`teachers/bulk/${formValues.school_id}`, API_PATH)
         try {
             const res = await fetch(api_url.href, {
                     method: 'POST',

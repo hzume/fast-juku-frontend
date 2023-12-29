@@ -11,6 +11,7 @@
     "serve": "npm run export && serve ./out"
   },
   "dependencies": {
+    "csvtojson": "^2.0.10",
     "encoding-japanese": "^2.0.0",
     "next": "14.0.1",
     "next-auth": "^4.24.4",

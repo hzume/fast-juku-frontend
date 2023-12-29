@@ -7,6 +7,9 @@ import { read } from "xlsx";
 import { useTeacherList, processXLSX } from "@/app/myfunctions";
 import { C } from "@/app/const";
 import { Teacher } from "@/app/types/teacher";
+import { TimeTableData } from "@/app/types/timetable";
+import { useSession } from "next-auth/react";
+import { time } from "console";
 
 export const Form = ({
     teacherList,
@@ -43,23 +46,22 @@ export const Form = ({
     const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		const fd = new FormData();
-		const query = new URLSearchParams({
-			school_id: user.school_id,
-			year: formValues.year,
-			month: formValues.month,
-		});
 		const file = await formValues.file!.arrayBuffer()
 		const workbook = read(file)
 		const processed_data = processXLSX(workbook, Number(formValues.year), Number(formValues.month));
-		const api_url = new URL(`timeslots/?${query}`, C.API_PATH)
+		const api_url = new URL(`timeslots/bulk/${user.school_id}`, process.env.API_PATH)
+        const timeTableData: TimeTableData = {
+            content: processed_data,
+            year: Number(formValues.year),
+            month: Number(formValues.month),
+        }
 		try {
 			const res = await fetch(api_url.href, {
 				method: 'POST',
 				headers: {
-					'Content-Type': 'application/json'
+					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ content: processed_data }),
+				body: JSON.stringify(timeTableData),
 			});
 			const json = await res.json();
 			console.log(json);
