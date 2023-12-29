@@ -6,6 +6,7 @@ import { getServerSession } from "next-auth";
 import { UserProvider } from "./UserContext";
 import { TeacherBase } from "@/app/types/teacher";
 import { ApiPathProvider } from "./ApiPathContext";
+import { withCoalescedInvoke } from "next/dist/lib/coalesced-function";
 
 
 export const DataFetch = async ({ children }: { children: React.ReactNode }) => {
@@ -16,7 +17,6 @@ export const DataFetch = async ({ children }: { children: React.ReactNode }) => 
     //@ts-ignore 
     const sub = session.user?.id;
     const api_url = new URL(`teachers/sub/${sub}`, process.env.API_PATH)
-    console.log(api_url.href)
     const res = await fetch(api_url.href, {
         method: "GET"
     });
