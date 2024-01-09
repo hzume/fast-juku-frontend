@@ -5,7 +5,7 @@ import { useState } from "react";
 import { MonthlySalary } from "@/app/types/salary";
 import { useApiPath } from "@/providers/ApiPathContext";
 import { useUser } from "@/providers/UserContext";
-import { MonthlySalaryTable } from "../components/SalaryTable";
+import { AnnualSalaryTable, MonthlySalaryTable } from "../components/SalaryTable";
 import { useTeacherList } from "@/app/myfunctions";
 
 export default function Page() {
@@ -25,7 +25,7 @@ export default function Page() {
         const query = new URLSearchParams({ year: year })
         const api_url = new URL(`salary/bulk/${user?.school_id}/?${query}`, API_PATH)
         const res = await fetch(api_url.href)
-        const monthly_salary_list = await res.json()
+        const monthly_salary_list: MonthlySalary[] = await res.json()
         setMonthlySalaryList(monthly_salary_list)
     }
     if (monthlySalaryList.length != 0) {
@@ -37,7 +37,7 @@ export default function Page() {
                         <h2>{year}年 年間給与計算管理表</h2>
                         <button onClick={() => setIsAnnual(false)}>(月間で見る)</button>
                     </div>
-                    <MonthlySalaryTable monthlySalaryList={monthlySalaryList} teacherList={teacherList} />
+                    <AnnualSalaryTable monthlySalaryList={monthlySalaryList} teacherList={teacherList} year={year}/>
                 </div>
                 </div>
             )
