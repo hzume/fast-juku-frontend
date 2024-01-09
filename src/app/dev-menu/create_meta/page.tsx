@@ -20,6 +20,9 @@ export default function Page() {
                 });
             const json = await res.json();
             console.log(json);
+            if (res.ok) {
+                alert('success');
+            }
         } catch (error) {
             console.error(error);
             console.log(data_form)

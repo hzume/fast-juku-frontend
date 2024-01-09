@@ -13,9 +13,11 @@
   "dependencies": {
     "csvtojson": "^2.0.10",
     "encoding-japanese": "^2.0.0",
+    "fs": "^0.0.1-security",
     "next": "14.0.1",
     "next-auth": "^4.24.4",
     "next-ssr": "^0.0.9",
+    "officecrypto-tool": "^0.0.8",
     "react": "^18",
     "react-dom": "^18",
     "serve": "^14.2.1",

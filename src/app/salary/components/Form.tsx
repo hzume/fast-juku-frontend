@@ -3,7 +3,6 @@ import { Meeting } from "@/app/types/meeting";
 import { Dispatch, SetStateAction, useState } from "react";
 import { showCreateMeetingModal } from "./CreateMeetingModal";
 import { useUser } from "@/providers/UserContext";
-import { read } from "xlsx";
 import { useTeacherList, processXLSX } from "@/app/myfunctions";
 import { C } from "@/app/const";
 import { Teacher } from "@/app/types/teacher";
@@ -11,6 +10,17 @@ import { TimeTableData } from "@/app/types/timetable";
 import { useSession } from "next-auth/react";
 import { time } from "console";
 import { useApiPath } from "@/providers/ApiPathContext";
+import { read } from "xlsx";
+import officeCrypto from "officecrypto-tool";
+
+function toArrayBuffer(buffer: Buffer) {
+    var ab = new ArrayBuffer(buffer.length);
+    var view = new Uint8Array(ab);
+    for (var i = 0; i < buffer.length; ++i) {
+        view[i] = buffer[i];
+    }
+    return ab;
+}
 
 export const Form = ({
     teacherList,
@@ -22,7 +32,7 @@ export const Form = ({
     setMeetings: Dispatch<SetStateAction<Meeting[]>>,
 }
 ) => {
-    const [formValues, setFormValues] = useState<{ year: string, month: string, file: File | null }>({ year: '', month: '', file: null });
+    const [formValues, setFormValues] = useState<{ year: string, month: string, file: File | null , password:string}>({ year: '', month: '', file: null , password:''});
     const user = useUser();
     const API_PATH = useApiPath();
 
@@ -49,8 +59,11 @@ export const Form = ({
         event.preventDefault();
 
         const file = await formValues.file!.arrayBuffer()
-        const workbook = read(file)
+        const fileBuffer = Buffer.from(file)
+        const decryptedFile = await officeCrypto.decrypt(fileBuffer, {password:formValues.password})
+        const workbook = read(decryptedFile)
         const processed_data = processXLSX(workbook, Number(formValues.year), Number(formValues.month));
+        console.log(processed_data)
         const api_url = new URL(`timeslots/bulk/${user.school_id}`, API_PATH)
         const timeTableData: TimeTableData = {
             content: processed_data,
@@ -100,6 +113,12 @@ export const Form = ({
                     <div className="label-text">時間割表</div>
                 </div>
                 <input type="file" name='file' onChange={onChangeFile} className="file-input file-input-bordered w-full" />
+            </div>
+            <div>
+                <div className="label">
+                    <div className="label-text">パスワード</div>
+                </div>
+                <input type="password" name='password' onChange={onChangeText} className="file-input file-input-bordered w-full" />
             </div>
             <button type="submit" disabled={!isFilled} className="btn btn-primary">送信</button>
         </form>

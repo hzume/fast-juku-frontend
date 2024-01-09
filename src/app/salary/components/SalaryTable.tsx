@@ -36,7 +36,7 @@ export const AnnualSalaryTable = ({
     
     const AnnualSalaryTableRow = ({annual_salary}: {annual_salary: AnnualSalary}) => {
         return (
-            <tr key={annual_salary.id}>
+            <tr className="text-right" key={annual_salary.id}>
                 <td>{idToTeacher.get(annual_salary.id)?.display_name}</td>
                 <td>{annual_salary.gross_salary}</td>
                 <td>{annual_salary.tax_amount}</td>
@@ -49,7 +49,7 @@ export const AnnualSalaryTable = ({
         <div className="overflow-x-auto">
             <table className="table table-zebra">
                 <thead>
-                    <tr key="header">
+                    <tr className="text-center" key="header">
                         <th>講師名</th>
                         <th>総額</th>
                         <th>源泉</th>
@@ -58,7 +58,7 @@ export const AnnualSalaryTable = ({
                     </tr>
                 </thead>
                 <tbody>
-                    <tr key="sum">
+                    <tr className="text-right" key="sum">
                         <th>合計</th>
                         <th>{gross_salary_sum}</th>
                         <th>{tax_amount_sum}</th>
@@ -90,7 +90,7 @@ export const MonthlySalaryTable = ({
 
     const MonthlySalaryTableRow = ({monthly_salary}: {monthly_salary: MonthlySalary}) => {
         return (
-            <tr key={monthly_salary.id}>
+            <tr className="text-right" key={monthly_salary.id}>
                 <td>{idToTeacher.get(monthly_salary.id)?.display_name}</td>
                 <td>{monthly_salary.gross_salary}</td>
                 <td>{monthly_salary.tax_amount}</td>
@@ -103,7 +103,7 @@ export const MonthlySalaryTable = ({
         <div className="overflow-x-auto">
             <table className="table table-zebra">
                 <thead>
-                    <tr key="header">
+                    <tr className="text-center" key="header">
                         <th>講師名</th>
                         <th>総額</th>
                         <th>源泉</th>
@@ -112,7 +112,7 @@ export const MonthlySalaryTable = ({
                     </tr>
                 </thead>
                 <tbody>
-                    <tr key="sum">
+                    <tr className="text-right" key="sum">
                         <th>合計</th>
                         <th>{gross_salary_sum}</th>
                         <th>{tax_amount_sum}</th>
