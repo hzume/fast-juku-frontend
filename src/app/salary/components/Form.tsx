@@ -10,6 +10,7 @@ import { Teacher } from "@/app/types/teacher";
 import { TimeTableData } from "@/app/types/timetable";
 import { useSession } from "next-auth/react";
 import { time } from "console";
+import { useApiPath } from "@/providers/ApiPathContext";
 
 export const Form = ({
     teacherList,
@@ -23,9 +24,10 @@ export const Form = ({
 ) => {
     const [formValues, setFormValues] = useState<{ year: string, month: string, file: File | null }>({ year: '', month: '', file: null });
     const user = useUser();
+    const API_PATH = useApiPath();
 
     if (!user) return <span className="loading loading-lg"></span>
-    
+
     const onChangeText = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
         setFormValues({ ...formValues, [name]: value });
@@ -44,33 +46,35 @@ export const Form = ({
     }
 
     const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
+        event.preventDefault();
 
-		const file = await formValues.file!.arrayBuffer()
-		const workbook = read(file)
-		const processed_data = processXLSX(workbook, Number(formValues.year), Number(formValues.month));
-		const api_url = new URL(`timeslots/bulk/${user.school_id}`, process.env.API_PATH)
+        const file = await formValues.file!.arrayBuffer()
+        const workbook = read(file)
+        const processed_data = processXLSX(workbook, Number(formValues.year), Number(formValues.month));
+        const api_url = new URL(`timeslots/bulk/${user.school_id}`, API_PATH)
         const timeTableData: TimeTableData = {
             content: processed_data,
             year: Number(formValues.year),
             month: Number(formValues.month),
+            meetings: meetings,
         }
-		try {
-			const res = await fetch(api_url.href, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(timeTableData),
-			});
-			const json = await res.json();
-			console.log(json);
-		} catch (error) {
-			console.error(error);
-			console.log(processed_data)
-		}
-	};
-    
+        try {
+            const res = await fetch(api_url.href, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(timeTableData),
+            });
+            if (res.ok) {
+                alert('送信しました');
+            }
+        } catch (error) {
+            console.error(error);
+            console.log(processed_data)
+        }
+    };
+
 
     return (
         <form className="form-control w-1/2 max-w-full space-y-4" onSubmit={onSubmit}>

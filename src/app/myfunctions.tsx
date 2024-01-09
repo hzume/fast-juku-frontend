@@ -27,6 +27,6 @@ export function useTeacherList(school_id?: string) {
     const API_PATH = useApiPath()
     const api_url = new URL(`teachers/bulk/${school_id}`, API_PATH)
     const fetcher = (url: string) => fetch(url).then(res => res.json())
-    const { data, error, isLoading } = useSWR(api_url.href, fetcher)
-    return { data, error, isLoading }
+    const { data, error, isLoading, mutate } = useSWR(api_url.href, fetcher)
+    return { data, error, isLoading, mutate }
 }

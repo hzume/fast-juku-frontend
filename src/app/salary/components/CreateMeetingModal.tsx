@@ -3,6 +3,7 @@ import { Meeting } from "@/app/types/meeting";
 import { Teacher } from "@/app/types/teacher";
 import showLoadingModal from "@/components/LoadingModal";
 import { closeModal, showModal } from "@/components/Modal"
+import { useUser } from "@/providers/UserContext";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 export const showCreateMeetingModal = (
@@ -27,6 +28,7 @@ const CreateMeetingModal = ({
     formValues: { year: string, month: string, file: File | null },
     teacherList: Teacher[],
 }) => {
+    const user = useUser();
     const teacherMap = new Map<string, Teacher>()
     teacherList.forEach((teacher) => {
         teacherMap.set(teacher.id, teacher)
@@ -43,11 +45,14 @@ const CreateMeetingModal = ({
             }
         }
         const meeting: Meeting = {
+            school_id: user?.school_id!,
             year: Number(formValues.year),
             month: Number(formValues.month),
             day: Number(data.day),
             start_time: data.start_time.toString(),
             end_time: data.end_time.toString(),
+            timeslot_type: "office_work",
+            timeslot_number: 0,
             teachers: attendTeacherList,
         }
         setMeetings((prev) => [...prev, meeting])

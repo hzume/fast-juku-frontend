@@ -27,8 +27,8 @@ const EditResultModalContent = ({ teacher }: { teacher: Teacher }) => {
     const api_url = new URL(`teachers/?${query}`, API_PATH)
 
     const onClick = () => {
-        closeModal()
         mutate(api_url.href)
+        closeModal()
     }
 
     return (

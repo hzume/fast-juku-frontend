@@ -11,8 +11,8 @@ export const Drawer = ({ children }: { children: React.ReactNode }) => {
                 <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
                 <ul className=" menu p-4 w-80 max-w-screen min-h-full bg-base-200 text-base-content space-y-3">
                     {/* Sidebar content here */}
-                    <li><Link href="/shift-schedule">シフト表</Link></li>
-                    <li><Link href="/timetable">時間割作成</Link></li>
+                    <li className="hidden"><Link href="/shift-schedule">シフト表</Link></li>
+                    <li className="hidden"><Link href="/timetable">時間割作成</Link></li>
                     <li><Link href="/salary">給与計算</Link></li>
                     <li><Link href="/management/teachers">管理メニュー</Link></li>
                     <li><Link href="/dev-menu">開発メニュー</Link></li>
