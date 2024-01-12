@@ -1,5 +1,5 @@
 import { C } from "@/app/const"
-import { Meeting } from "@/app/types/meeting";
+import { Meeting } from "@/app/types/timeslot";
 import { Teacher } from "@/app/types/teacher";
 import showLoadingModal from "@/components/LoadingModal";
 import { closeModal, showModal } from "@/components/Modal"

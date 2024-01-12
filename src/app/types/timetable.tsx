@@ -1,8 +1,6 @@
-import { Meeting } from "./meeting";
+import { Meeting } from "./timeslot";
 
 export type TimeTableData = {
     content: unknown[],
-    year: number,
-    month?: number,
     meetings: Meeting[],
 }

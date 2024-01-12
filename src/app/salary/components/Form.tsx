@@ -1,5 +1,5 @@
 "use client"
-import { Meeting } from "@/app/types/meeting";
+import { Meeting } from "@/app/types/timeslot";
 import { Dispatch, SetStateAction, useState } from "react";
 import { showCreateMeetingModal } from "./CreateMeetingModal";
 import { useUser } from "@/providers/UserContext";
@@ -12,6 +12,7 @@ import { time } from "console";
 import { useApiPath } from "@/providers/ApiPathContext";
 import { read } from "xlsx";
 import officeCrypto from "officecrypto-tool";
+import { useRouter } from "next/navigation";
 
 function toArrayBuffer(buffer: Buffer) {
     var ab = new ArrayBuffer(buffer.length);
@@ -32,9 +33,11 @@ export const Form = ({
     setMeetings: Dispatch<SetStateAction<Meeting[]>>,
 }
 ) => {
-    const [formValues, setFormValues] = useState<{ year: string, month: string, file: File | null , password:string}>({ year: '', month: '', file: null , password:''});
+    const [formValues, setFormValues] = useState<{ year: string, month: string, file: File | null , password:string}>({ year: '', month: '', file: null , password:'0'});
     const user = useUser();
     const API_PATH = useApiPath();
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const router = useRouter()
 
     if (!user) return <span className="loading loading-lg"></span>
 
@@ -63,15 +66,14 @@ export const Form = ({
         const decryptedFile = await officeCrypto.decrypt(fileBuffer, {password:formValues.password})
         const workbook = read(decryptedFile)
         const processed_data = processXLSX(workbook, Number(formValues.year), Number(formValues.month));
-        console.log(processed_data)
-        const api_url = new URL(`timeslots/bulk/${user.school_id}`, API_PATH)
+        const query = new URLSearchParams({ year: formValues.year, month: formValues.month })
+        const api_url = new URL(`salary/bulk/${user.school_id}/?${query}`, API_PATH)
         const timeTableData: TimeTableData = {
             content: processed_data,
-            year: Number(formValues.year),
-            month: Number(formValues.month),
             meetings: meetings,
         }
         try {
+            setIsLoading(true)
             const res = await fetch(api_url.href, {
                 method: 'POST',
                 headers: {
@@ -79,15 +81,15 @@ export const Form = ({
                 },
                 body: JSON.stringify(timeTableData),
             });
-            if (res.ok) {
-                alert('送信しました');
-            }
+            router.push(`/salary/view/?${query}`)
+            alert('送信に成功しました')
         } catch (error) {
             console.error(error);
             console.log(processed_data)
         }
     };
 
+    if (isLoading) return <span className="loading loading-lg"></span>
 
     return (
         <form className="form-control w-1/2 max-w-full space-y-4" onSubmit={onSubmit}>

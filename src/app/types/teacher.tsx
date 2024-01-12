@@ -9,8 +9,6 @@ export type Teacher = {
     trans_fee: number,
     teacher_type: string,
 
-    year?: number,
-    month?: number,
     sub?: string,
 }
 

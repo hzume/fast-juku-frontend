@@ -1,4 +1,4 @@
-import { Meeting } from "@/app/types/meeting"
+import { Meeting } from "@/app/types/timeslot"
 
 export const MeetingList = ({
     meetings,

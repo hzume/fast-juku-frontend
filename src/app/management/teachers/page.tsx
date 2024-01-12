@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { TeacherTable } from "./components/TeacherTable";
 import useSWR from "swr";
 import { useTeacherList } from "@/app/myfunctions";
+import { showCreateModal } from "./components/CreateModal";
 
 export default function Page() {
     const user = useUser();
@@ -17,6 +18,7 @@ export default function Page() {
     
     return (
         <div>
+            <button className="btn btn-primary btn-outline" onClick={() => showCreateModal()}>新規講師登録</button>
             <TeacherTable teacherList={teacherList} isLoading={isLoading} />
         </div>
     )

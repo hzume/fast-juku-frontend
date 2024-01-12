@@ -3,6 +3,11 @@
 import Link from "next/link"
 
 export default function Page() {
+	const date = new Date()
+	const year = date.getFullYear()
+	const month = date.getMonth() + 1
+	const query = new URLSearchParams({ year: year.toString(), month: month.toString() })
+	const url = `/salary/view/?${query}`
 	return (
 		<div className="space-y-4">
 			<div>
@@ -12,14 +17,13 @@ export default function Page() {
 					</button>
 				</Link>
 			</div>
-			<div>
-				<Link href="/salary/view">
+			<div className="flex gap-2">
+				<Link href={url}>
 					<button className="btn btn-outline btn-wide">
 						閲覧
 					</button>
 				</Link>
 			</div>
-
 		</div>
 	)
 }

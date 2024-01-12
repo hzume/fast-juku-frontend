@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 export const Breadcrumbs = () => {
@@ -10,6 +11,8 @@ export const Breadcrumbs = () => {
         "timetable": "時間割作成",
         "salary": "給与計算",
         "shift-schedule": "シフト表",
+        "create": "新規作成",
+        "view": "閲覧",
     }
     //@ts-ignore
     const path_names = path_segments.map(segment => en2ja[segment] || segment)
@@ -23,7 +26,7 @@ export const Breadcrumbs = () => {
                 </li>
                 {path_names.map((path_name, i) => (
                     <li key={i}>
-                        <a href={`/${path_segments.slice(0, i + 1).join('/')}`}>{path_name}</a>
+                        <Link href={`/${path_segments.slice(0, i + 1).join('/')}`}>{path_name}</Link>
                     </li>
                 ))}
             </ul>
