@@ -21,7 +21,7 @@ export default function Page() {
             const json = await res.json();
             console.log(json);
             if (res.ok) {
-                alert('success');
+                alert(json.school_id);
             }
         } catch (error) {
             console.error(error);

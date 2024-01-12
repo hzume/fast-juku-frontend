@@ -7,6 +7,9 @@ export default function Home() {
   const user = useUser();
   return (
     <div className="flex flex-col w-full h-full">
+      <div className="flex justify-between">
+        <h2>ようこそ、{user?.family_name}さん</h2>
+      </div>
       <div className="h-1/3 card bg-base-200 rounded-box">
         <ul className='m-8 ml-16 space-y-4 text-xl'>
           <li>● 講師情報の登録・削除・更新は「管理メニュー」</li>
