@@ -23,6 +23,28 @@ export function processXLSX(wb: Xlsx.WorkBook, year: number, month: number) {
     return xlsx_data
 }
 
+export function getPreviousYearMonth() {
+    const date = new Date()
+    let year: number
+	let month: number
+	if (date.getDate()>15) {
+		year = date.getFullYear()
+		month = date.getMonth() + 1
+	}
+	else {
+		if (date.getMonth()==0) {
+			year = date.getFullYear() - 1
+			month = 12
+		}
+		else {
+			year = date.getFullYear()
+			month = date.getMonth()		
+		}
+	}
+    return { year, month }
+}
+    
+
 export function useTeacherList(school_id?: string) {
     const API_PATH = useApiPath()
     const api_url = new URL(`teachers/bulk/${school_id}`, API_PATH)

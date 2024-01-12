@@ -1,11 +1,11 @@
 "use client"
 
 import Link from "next/link"
+import { getPreviousYearMonth } from "../myfunctions"
 
 export default function Page() {
 	const date = new Date()
-	const year = date.getFullYear()
-	const month = date.getMonth() + 1
+	const { year, month } = getPreviousYearMonth()
 	const query = new URLSearchParams({ year: year.toString(), month: month.toString() })
 	const url = `/salary/view/?${query}`
 	return (

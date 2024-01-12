@@ -5,11 +5,11 @@ import { use, useState } from "react";
 import { useApiPath } from "@/providers/ApiPathContext";
 import { useUser } from "@/providers/UserContext";
 import { AnnualySalaryTable, MonthlySalaryTable } from "../components/SalaryTable";
-import { useTeacherList } from "@/app/myfunctions";
+import { getPreviousYearMonth, useTeacherList } from "@/app/myfunctions";
 import { MonthlyAttendance } from "@/app/types/timeslot";
 import { showDeleteModal } from "../components/DeleteModal";
 import useSWR, { mutate } from "swr";
-import { Teacher } from "@/app/types/teacher";
+
 
 export default function Page() {
     const [monthlyAttendanceList, setMonthlyAttendanceList] = useState<MonthlyAttendance[]>([])
@@ -21,8 +21,8 @@ export default function Page() {
     const year_init = searchParams.get('year')
     const month_init = searchParams.get('month')
     if (!year_init) {
-        const date = new Date()        
-        const query = new URLSearchParams({ year: date.getFullYear().toString(), month: (date.getMonth() + 1).toString() })
+        const { year, month } = getPreviousYearMonth() 
+        const query = new URLSearchParams({ year: year.toString(), month: month.toString() })
         router.push(`/salary/view/?${query}`)
     }
     const [year, setYear] = useState<string>(year_init!)
