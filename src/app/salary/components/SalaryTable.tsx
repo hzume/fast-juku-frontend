@@ -20,7 +20,7 @@ export const MonthlySalaryTable = ({
     const tax_amount_sum = monthlyAttendanceList.reduce((sum, monthly_attendance) => sum + monthly_attendance.monthly_tax_amount, 0)
     const trans_fee_sum = monthlyAttendanceList.reduce((sum, monthly_attendance) => sum + monthly_attendance.monthly_trans_fee, 0)
     const extra_payment_sum = monthlyAttendanceList.reduce((sum, monthly_attendance) => sum + monthly_attendance.extra_payment, 0)
-    const net_salary_sum = gross_salary_sum - tax_amount_sum + trans_fee_sum + extra_payment_sum
+    const net_salary_sum = gross_salary_sum - tax_amount_sum + extra_payment_sum
 
 
     const MonthlySalaryTableRow = ({ monthly_attendance }: { monthly_attendance: MonthlyAttendance }) => {
@@ -29,14 +29,15 @@ export const MonthlySalaryTable = ({
         const onClick = () => {
             router.push(url)
         }
+        const net_salary = monthly_attendance.monthly_gross_salary + monthly_attendance.extra_payment - monthly_attendance.monthly_tax_amount
         return (
             <tr className="text-right" key={monthly_attendance.teacher.id}>
                 <td className="text-center">{monthly_attendance.teacher.display_name}</td>
                 <td>{monthly_attendance.monthly_gross_salary}</td>
-                <td>{monthly_attendance.monthly_tax_amount}</td>
-                <td>{monthly_attendance.monthly_trans_fee}</td>
                 <td>{monthly_attendance.extra_payment}</td>
-                <td>{monthly_attendance.monthly_gross_salary - monthly_attendance.monthly_tax_amount + monthly_attendance.monthly_trans_fee + monthly_attendance.extra_payment}</td>
+                <td>{monthly_attendance.monthly_tax_amount}</td>                
+                <td>{net_salary}</td>
+                <td>{monthly_attendance.monthly_trans_fee}</td>
                 <td className="text-center"><button onClick={onClick} className="btn btn-sm btn-outline">詳細</button></td>
             </tr>
         )
@@ -55,20 +56,20 @@ export const MonthlySalaryTable = ({
                         <tr className="text-center" key="header">
                             <th>講師名</th>
                             <th>総額</th>
-                            <th>源泉</th>
-                            <th>交通費</th>
                             <th>追加</th>
+                            <th>源泉</th>                                                        
                             <th>入金額</th>
+                            <th>交通費</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr className="text-right" key="sum">
                             <th className="text-center">合計</th>
-                            <th>{gross_salary_sum}</th>
+                            <th>{gross_salary_sum}</th>                                                 
+                            <th>{extra_payment_sum}</th>    
                             <th>{tax_amount_sum}</th>
+                            <th>{net_salary_sum}</th>                                                                                
                             <th>{trans_fee_sum}</th>
-                            <th>{extra_payment_sum}</th>
-                            <th>{net_salary_sum}</th>
                         </tr>
                         {monthlyAttendanceList.map(
                             monthly_attendance =>
@@ -119,11 +120,11 @@ export const AnnualySalaryTable = ({
         return (
             <tr className="text-right" key={teacher.id}>
                 <td className="text-center">{teacher.display_name}</td>
-                <td>{gross_salary_sum}</td>
+                <td>{gross_salary_sum}</td>                                
                 <td>{tax_amount_sum}</td>
-                <td>{trans_fee_sum}</td>
                 <td>{extra_payment_sum}</td>
                 <td>{net_salary_sum}</td>
+                <td>{trans_fee_sum}</td>
             </tr>
         )
     }
@@ -141,20 +142,20 @@ export const AnnualySalaryTable = ({
                         <tr className="text-center" key="header">
                             <th>講師名</th>
                             <th>総額</th>
-                            <th>源泉</th>
-                            <th>交通費</th>
                             <th>追加</th>
+                            <th>源泉</th>
                             <th>入金額</th>
+                            <th>交通費</th>                                                        
                         </tr>
                     </thead>
                     <tbody>
                         <tr className="text-right" key="sum">
                             <th className="text-center">合計</th>
                             <th>{gross_salary_sum}</th>
-                            <th>{tax_amount_sum}</th>
-                            <th>{trans_fee_sum}</th>
                             <th>{extra_payment_sum}</th>
+                            <th>{tax_amount_sum}</th>                                                        
                             <th>{net_salary_sum}</th>
+                            <th>{trans_fee_sum}</th>
                         </tr>
                         {teacherList.map(
                             (teacher) =>
