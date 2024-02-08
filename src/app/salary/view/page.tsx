@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { use, useState } from "react";
 import { useApiPath } from "@/providers/ApiPathContext";
 import { useUser } from "@/providers/UserContext";
-import { AnnualySalaryTable, MonthlySalaryTable } from "../components/SalaryTable";
+import { YearlySalaryTable, MonthlySalaryTable } from "../components/SalaryTable";
 import { getPreviousYearMonth, useTeacherList } from "@/app/myfunctions";
 import { MonthlyAttendance } from "@/app/types/timeslot";
 import { showDeleteModal } from "../components/DeleteModal";
@@ -116,7 +116,7 @@ export default function Page() {
                 &&
                 !month 
                 &&
-                <AnnualySalaryTable monthlyAttendanceList={monthlyAttendanceList} year={year!}/>
+                <YearlySalaryTable monthlyAttendanceList={monthlyAttendanceList} year={year!}/>
             }
             {
                 isLoading

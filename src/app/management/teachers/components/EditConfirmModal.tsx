@@ -3,19 +3,9 @@ import { C } from "@/app/const"
 import { Teacher, TeacherBase } from "@/app/types/teacher"
 import showLoadingModal from "@/components/LoadingModal";
 import { closeModal, showModal } from "@/components/Modal"
-import { showEditResultModal } from "./EditResultModal";
+import { EditResultModalContent } from "./EditResultModal";
 import { useApiPath } from "@/providers/ApiPathContext";
 
-
-export const showEditConfirmModal = (
-    teacher: Teacher,
-    editedTeacher: Teacher,
-) => {
-    showModal({
-        title: '編集内容の確定',
-        children: <EditConfirmModalContent teacher={teacher} editedTeacher={editedTeacher} />
-    });
-}
 
 export const EditConfirmModalContent = (
     { teacher, editedTeacher }
@@ -67,7 +57,11 @@ export const EditConfirmModalContent = (
                 const newTeacher: Teacher = {
                     ...data
                 }
-                showEditResultModal(newTeacher)
+                showModal({
+                    title: '編集が完了しました',
+                    children: <EditResultModalContent teacher={teacher} />,
+                    canClose: false,
+                });
             })
             .catch(error => {
                 console.error(error)

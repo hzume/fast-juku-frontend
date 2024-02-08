@@ -2,9 +2,10 @@ import Xlsx from "xlsx"
 import { utils } from "xlsx"
 import { C } from "@/app/const"
 import { User } from "@/app/types/user"
-import useSWR from "swr"
+import useSWR, { useSWRConfig } from "swr"
 import { use } from "react"
 import { useApiPath } from "@/providers/ApiPathContext"
+import { Teacher } from "./types/teacher"
 
 export function processXLSX(wb: Xlsx.WorkBook, year: number, month: number) {
     const xlsx_data = []
@@ -23,7 +24,7 @@ export function processXLSX(wb: Xlsx.WorkBook, year: number, month: number) {
     return xlsx_data
 }
 
-export function getPreviousYearMonth() {
+export function getPreviousYearMonth(): { year: number, month: number } {
     const date = new Date()
     let year: number
 	let month: number
@@ -43,11 +44,18 @@ export function getPreviousYearMonth() {
 	}
     return { year, month }
 }
-    
 
-export function useTeacherList(school_id?: string) {
+
+export function useTeacherListUrl(school_id?: string): URL {
     const API_PATH = useApiPath()
     const api_url = new URL(`teachers/bulk/${school_id}`, API_PATH)
+    return api_url
+}
+    
+
+export function useTeacherList(school_id?: string) 
+    : { data: Teacher[], error: any, isLoading: boolean, mutate: any } {
+    const api_url = useTeacherListUrl(school_id)
     const fetcher = (url: string) => fetch(url).then(res => res.json())
     const { data, error, isLoading, mutate } = useSWR(api_url.href, fetcher)
     return { data, error, isLoading, mutate }

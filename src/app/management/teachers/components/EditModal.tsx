@@ -1,14 +1,20 @@
 import { Teacher } from "@/app/types/teacher"
 import { showModal } from "@/components/Modal";
-import { showEditConfirmModal } from "./EditConfirmModal";
+import { EditConfirmModalContent } from "./EditConfirmModal";
 
 
-export const showEditModal = (teacher: Teacher) => {
-    showModal({
-        title: '講師情報を編集',
-        children: <EditModalContent teacher={teacher} />
-    });
-};
+export const ShowEditModalButton = ({ teacher }: { teacher: Teacher }) => {
+    return (
+        <button className="btn btn-outline btn-sm"
+            onClick={() => showModal({
+                title: '講師情報を編集',
+                children: <EditModalContent teacher={teacher} />
+            })
+        }>
+            編集
+        </button>
+    )
+}
 
 const EditModalContent = ({ teacher }: { teacher: Teacher }) => {
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -27,7 +33,10 @@ const EditModalContent = ({ teacher }: { teacher: Teacher }) => {
             sub: teacher.sub,
             school_id: teacher.school_id,
         }
-        showEditConfirmModal(teacher, editedTeacher);
+        showModal({
+            title: '編集内容の確定',
+            children: <EditConfirmModalContent teacher={teacher} editedTeacher={editedTeacher} />
+        });
     }
 
     return (
@@ -41,21 +50,21 @@ const EditModalContent = ({ teacher }: { teacher: Teacher }) => {
                         </div>
                     </div>
                 </div>
-                <input name="display_name" type="text" placeholder={teacher?.display_name} className="input input-bordered w-full" />
+                <input name="display_name" type="text" defaultValue={teacher?.display_name} className="input input-bordered w-full" />
             </div>
             <div className="md:flex gap-8">
                 <div>
                     <div className="label">
                         <div className="label-text">苗字</div>
                     </div>
-                    <input name="family_name" type="text" placeholder={teacher?.family_name} className="input input-bordered w-full" />
+                    <input name="family_name" type="text" defaultValue={teacher?.family_name} className="input input-bordered w-full" />
                 </div>
 
                 <div>
                     <div className="label">
                         <div className="label-text">名前</div>
                     </div>
-                    <input name="given_name" type="text" placeholder={teacher?.given_name} className="input input-bordered w-full" />
+                    <input name="given_name" type="text" defaultValue={teacher?.given_name} className="input input-bordered w-full" />
                 </div>
             </div>
 
@@ -64,21 +73,21 @@ const EditModalContent = ({ teacher }: { teacher: Teacher }) => {
                     <div className="label">
                         <div className="label-text">授業時給</div>
                     </div>
-                    <input name="lecture_hourly_pay" type="number" min={0} placeholder={teacher?.lecture_hourly_pay.toString()} className="input input-bordered w-full" />
+                    <input name="lecture_hourly_pay" type="number" min={0} defaultValue={teacher?.lecture_hourly_pay.toString()} className="input input-bordered w-full" />
                 </div>
 
                 <div>
                     <div className="label">
                         <div className="label-text">事務時給</div>
                     </div>
-                    <input name="office_hourly_pay" type="number" min={0} placeholder={teacher?.office_hourly_pay.toString()} className="input input-bordered w-full" />
+                    <input name="office_hourly_pay" type="number" min={0} defaultValue={teacher?.office_hourly_pay.toString()} className="input input-bordered w-full" />
                 </div>
 
                 <div>
                     <div className="label">
                         <div className="label-text">交通費</div>
                     </div>
-                    <input name="trans_fee" type="number" min={0} placeholder={teacher?.trans_fee.toString()} className="input input-bordered w-full" />
+                    <input name="trans_fee" type="number" min={0} defaultValue={teacher?.trans_fee.toString()} className="input input-bordered w-full" />
                 </div>
             </div>
             <button type="submit" className="btn btn-primary">更新</button>

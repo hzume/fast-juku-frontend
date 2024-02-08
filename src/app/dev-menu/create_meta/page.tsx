@@ -1,7 +1,7 @@
 "use client";
 import { C } from "@/app/const";
 import { useApiPath } from "@/providers/ApiPathContext";
-import React, { use } from "react";
+import React, { use } from 'react';
 
 export default function Page() {
     const API_PATH = useApiPath();
@@ -30,7 +30,7 @@ export default function Page() {
     }
     return (
         <form className="form-control" onSubmit={onSubmit}>
-            <input type="text" name='school_name' placeholder="type school_name" className="input w-full max-w-xs"/>
+            <input type="text" name='school_name' placeholder="type school_name" className="input w-full max-w-xs" />  
             <button type="submit" className="btn btn-primary">Submit</button>
         </form>
     )

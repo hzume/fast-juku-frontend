@@ -38,6 +38,7 @@ export const DetailSalaryTable = ({ ma, year, month }: { ma: MonthlyAttendance, 
 
 
     const name = ma.teacher.family_name + " " + ma.teacher.given_name
+    const total_payment = ma.monthly_gross_salary + ma.extra_payment
     const net_salary = ma.monthly_gross_salary + ma.extra_payment - ma.monthly_tax_amount
 
     return (
@@ -50,8 +51,9 @@ export const DetailSalaryTable = ({ ma, year, month }: { ma: MonthlyAttendance, 
                 <table className="table text-xl">
                     <thead className="text-right">
                         <tr>
-                            <th>合計額</th>                                                       
+                            <th>給与</th>                              
                             <th>追加</th>
+                            <th>総額</th>      
                             <th>源泉</th> 
                             <th>支給額</th>
                             <th>交通費</th>
@@ -61,6 +63,7 @@ export const DetailSalaryTable = ({ ma, year, month }: { ma: MonthlyAttendance, 
                         <tr>
                             <td>{ma.monthly_gross_salary}円</td>
                             <td>{ma.extra_payment}円</td>
+                            <td>{total_payment}円</td>
                             <td>{ma.monthly_tax_amount}円</td>                            
                             <td>{net_salary}円</td>
                             <td>{ma.monthly_trans_fee}円</td>

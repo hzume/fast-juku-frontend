@@ -1,63 +1,24 @@
 "use client"
 import { Teacher, TeacherBase } from "@/app/types/teacher"
 import { closeModal, showModal } from "@/components/Modal";
-import { showEditConfirmModal } from "./EditConfirmModal";
 import { useUser } from "@/providers/UserContext";
 import { useState } from "react";
 import showLoadingModal from "@/components/LoadingModal";
 import { useApiPath } from "@/providers/ApiPathContext";
-import { mutate } from "swr";
+import { useSWRConfig } from "swr";
+import { useTeacherListUrl } from "@/app/myfunctions";
 
-
-export const showCreateModal = () => {
-    showModal({
-        title: '講師情報を登録',
-        children: <CreateModalContent />
-    });
-};
-
-const showCreateResultModal = (teacher: Teacher) => {
-    showModal({
-        title: '講師情報を登録',
-        children: <CreateResultModalContent teacher={teacher} />
-    });
-}
-
-const CreateResultModalContent = ({ teacher }: { teacher: Teacher }) => {
-    const onClick = () => {
-        closeModal()
-    }
+export const ShowCreateModalButton = () => {
     return (
-        <div className="form-control w-full">
-            <div className="overflow-x-auto space-y-4">
-                <table className="table table-fixed">
-                    <thead>
-                        <tr key="header">
-                            <th></th>
-                            <th>表示名</th>
-                            <th>苗字</th>
-                            <th>名前</th>
-                            <th>授業時給</th>
-                            <th>事務時給</th>
-                            <th>交通費</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr key="after">
-                            <th className="bg-base-200">変更後</th>
-                            <th>{teacher.display_name}</th>
-                            <th>{teacher.family_name}</th>
-                            <th>{teacher.given_name}</th>
-                            <th>{teacher.lecture_hourly_pay}</th>
-                            <th>{teacher.office_hourly_pay}</th>
-                            <th>{teacher.trans_fee}</th>
-                        </tr>
-                    </tbody>
-                </table>
-
-            </div>
-            <button className="btn btn-primary" onClick={onClick}>閉じる</button>
-        </div>
+        <button className="btn btn-primary btn-outline"
+            onClick={
+                () => showModal({
+                    title: '講師情報を登録',
+                    children: <CreateModalContent />
+                })
+            }>
+            新規講師登録
+        </button>
     )
 }
 
@@ -95,7 +56,10 @@ const CreateModalContent = () => {
                 }
             })
             const teacher: Teacher = await res.json()
-            showCreateResultModal(teacher);
+            showModal({
+                title: '講師情報を登録',
+                children: <CreateResultModalContent teacher={teacher} />
+            });
         }
         catch (err) {
             console.log(err)
@@ -163,5 +127,47 @@ const CreateModalContent = () => {
             </div>
             <button type="submit" disabled={!isFilled} className="btn btn-primary">更新</button>
         </form>
+    )
+}
+
+const CreateResultModalContent = ({ teacher }: { teacher: Teacher }) => {
+    const user = useUser()
+    const {mutate} = useSWRConfig()
+    const api_url = useTeacherListUrl(user?.school_id)
+
+    const onClick = () => {
+        mutate(api_url.href)
+        closeModal()
+    }
+    return (
+        <div className="form-control w-full">
+            <div className="overflow-x-auto space-y-4">
+                <table className="table table-fixed">
+                    <thead>
+                        <tr key="header">
+                            <th></th>
+                            <th>表示名</th>
+                            <th>苗字</th>
+                            <th>名前</th>
+                            <th>授業時給</th>
+                            <th>事務時給</th>
+                            <th>交通費</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr key="after">
+                            <th className="bg-base-200">変更後</th>
+                            <th>{teacher.display_name}</th>
+                            <th>{teacher.family_name}</th>
+                            <th>{teacher.given_name}</th>
+                            <th>{teacher.lecture_hourly_pay}</th>
+                            <th>{teacher.office_hourly_pay}</th>
+                            <th>{teacher.trans_fee}</th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button className="btn btn-primary" onClick={onClick}>閉じる</button>
+        </div>
     )
 }

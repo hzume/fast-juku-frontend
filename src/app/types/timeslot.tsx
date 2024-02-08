@@ -17,8 +17,8 @@ export type Timeslot = {
     day: number,
     start_time: string,
     end_time: string,
-    timeslot_type: string,
     timeslot_number: number,
+    timeslot_type: string,
 }
 
 export type MonthlyAttendance = {
@@ -37,4 +37,12 @@ export type MonthlyAttendance = {
     monthly_tax_amount: number,
     monthly_trans_fee: number,
     extra_payment: number,
+    remark: string | null,
+}
+
+export type UpdateTimeslotsReaq = {
+    timeslot_list: Timeslot[],
+    extra_payment: number,
+    remark: string | null,
+    teacher: Teacher,
 }
