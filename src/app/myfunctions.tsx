@@ -6,6 +6,7 @@ import useSWR, { useSWRConfig } from "swr"
 import { use } from "react"
 import { useApiPath } from "@/providers/ApiPathContext"
 import { Teacher } from "./types/teacher"
+import { MonthlyAttendance } from "./types/timeslot"
 
 export function processXLSX(wb: Xlsx.WorkBook, year: number, month: number) {
     const xlsx_data = []
@@ -58,5 +59,26 @@ export function useTeacherList(school_id?: string)
     const api_url = useTeacherListUrl(school_id)
     const fetcher = (url: string) => fetch(url).then(res => res.json())
     const { data, error, isLoading, mutate } = useSWR(api_url.href, fetcher)
+    return { data, error, isLoading, mutate }
+}
+
+export function useAttendanceUrl(teacher_id: string, year: number, month: number): URL {
+    const API_PATH = useApiPath()
+    const api_url = new URL(`salary/${teacher_id}/?year=${year}&month=${month}`, API_PATH)
+    return api_url
+}
+    
+
+export function useAttendance(teacher_id: string, year: number, month: number) 
+    : { data: MonthlyAttendance, error: any, isLoading: boolean, mutate: any } {
+    const api_url = useAttendanceUrl(teacher_id, year, month)
+    const fetcher = (url: string) => fetch(url).then(res => res.json())
+    const { data, error, isLoading, mutate } = useSWR(api_url.href, fetcher)
+    if (!isLoading) {
+        for (let timeslot of data.timeslot_list) {
+            timeslot.start_time = new Date(timeslot.start_time)
+            timeslot.end_time = new Date(timeslot.end_time)
+        }
+    }
     return { data, error, isLoading, mutate }
 }

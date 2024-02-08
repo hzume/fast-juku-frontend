@@ -5,6 +5,7 @@ import { useTeacherList } from "@/app/myfunctions";
 import { ShowCreateModalButton } from "./components/CreateModal";
 import { ShowDeleteModalButton } from "./components/DeleteModal";
 import { ShowEditModalButton } from "./components/EditModal";
+import { LoadingIcon } from "@/components/LoadingIcon";
 
 
 const TeacherRow = ({ teacher }: { teacher: Teacher }) => {
@@ -26,8 +27,8 @@ export default function Page() {
     const { data: teacherList, error, isLoading, mutate }:
         { data: Teacher[], error: any, isLoading: any, mutate: any } = useTeacherList(user?.school_id)
 
-    if (!user) return <span className="loading loading-lg"></span>
-    if (isLoading) return <span className="loading loading-lg"></span>
+    if (!user) return <LoadingIcon/>
+    if (isLoading) return <LoadingIcon/>
     if (error) return <div>{error}</div>;
 
     return (
@@ -54,7 +55,7 @@ export default function Page() {
             </div>
             {isLoading &&
                 <div className="flex place-content-center mt-20">
-                    <div className="loading loading-spinner loading-lg"></div>
+                    <LoadingIcon />
                 </div>
             }
         </div>
