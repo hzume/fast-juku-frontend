@@ -16,7 +16,7 @@ export const MeetingList = ({
             <div className="rounded-lg border-black p-4 pt-0 bg-white shadow-xl">
                 <div className="flex justify-between">
                     <div className="font-bold pt-4">
-                        {meeting.year}年 {meeting.month}月 {meeting.day}日  {meeting.start_time}~{meeting.end_time}
+                        {meeting.year}年 {meeting.month}月 {meeting.day}日  {meeting.start_time.getHours()}:{meeting.start_time.getMinutes()}~{meeting.end_time.getHours()}:{meeting.end_time.getMinutes()}
                     </div>
                     <div className="pt-2">
                     <button onClick={onClick} className="btn btn-outline btn-error btn-sm">
