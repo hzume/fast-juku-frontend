@@ -2,6 +2,7 @@
 import { useTeacherList } from "@/app/myfunctions";
 import { Teacher } from "@/app/types/teacher";
 import { MonthlyAttendance } from "@/app/types/timeslot";
+import { LoadingIcon } from "@/components/LoadingIcon";
 import { useUser } from "@/providers/UserContext";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -22,12 +23,11 @@ export const MonthlySalaryTable = ({
     const tax_amount_sum = monthlyAttendanceList.reduce((sum, monthly_attendance) => sum + monthly_attendance.monthly_tax_amount, 0)
     const net_salary_sum = gross_salary_sum - tax_amount_sum + extra_payment_sum
     const trans_fee_sum = monthlyAttendanceList.reduce((sum, monthly_attendance) => sum + monthly_attendance.monthly_trans_fee, 0)
-
-
+    monthlyAttendanceList = monthlyAttendanceList.sort((a, b) => a.teacher.display_name.localeCompare(b.teacher.display_name))
 
     const MonthlySalaryTableRow = ({ monthly_attendance }: { monthly_attendance: MonthlyAttendance }) => {
         const query = new URLSearchParams({ year: year.toString(), month: month.toString() })
-        const url = `/salary/view/${monthly_attendance.teacher.id}/?${query}`
+        const url = `/salary/view-payslip/${monthly_attendance.teacher.id}/?${query}`
         const onClick = () => {
             router.push(url)
         }
@@ -42,7 +42,7 @@ export const MonthlySalaryTable = ({
                 <td>{monthly_attendance.monthly_tax_amount}</td>                
                 <td>{net_salary}</td>
                 <td>{monthly_attendance.monthly_trans_fee}</td>
-                <td className="text-center"><button onClick={onClick} className="btn btn-sm btn-outline">詳細</button></td>
+                <td className="text-center"><button onClick={onClick} className="btn btn-sm btn-outline print:hidden">詳細</button></td>
             </tr>
         )
     }
@@ -51,7 +51,7 @@ export const MonthlySalaryTable = ({
         <div className="space-y-2">
             <div className="flex justify-between">
                 <div className="flex gap-4">
-                    <h2>{year}年{month}月 給与計算管理表</h2>
+                    <h2>{year}年{month}月 給与明細表</h2>
                 </div>
             </div>
             <div className="overflow-x-auto">
@@ -100,7 +100,7 @@ export const YearlySalaryTable = ({
     const user = useUser()
     const { data: teacherList, error, isLoading}: {data: Teacher[], error: any, isLoading: any} = useTeacherList(user?.school_id)
     if (error) return <div>{error}</div>
-    if (isLoading) return <span className="loading loading-lg"></span>
+    if (isLoading) return <LoadingIcon/>
 
     const gross_salary_yearly = monthlyAttendanceList.reduce((sum, monthly_attendance) => sum + monthly_attendance.monthly_gross_salary, 0)
     const extra_payment_yearly = monthlyAttendanceList.reduce((sum, monthly_attendance) => sum + monthly_attendance.extra_payment, 0)

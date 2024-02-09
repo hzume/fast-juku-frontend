@@ -64,13 +64,13 @@ export const DetailSalaryTable = (
             <tr>
                 <td key="day" className="text-right">{i + 1}</td>
                 {isAttendList.map((isAttend, j) => {
-                    return <td key={j.toString()} className="text-center"><input name={j.toString()} onChange={onChange} type="checkbox" checked={isAttend} className="checkbox" /></td>
+                    return <td key={j.toString()} className="text-center"><input name={j.toString()} onChange={onChange} type="checkbox" checked={isAttend} /></td>
                 })}
                 <td key="lec">{ma.daily_lecture_amount[i]}</td>
                 <td key="off">{ma.daily_officework_amount[i]}</td>
                 <td key="late">{ma.daily_latenight_amount[i]}</td>
                 <td key="eight">{ma.daily_over_eight_hour_amount[i]}</td>
-                <td><input type="checkbox" checked={ma.daily_attendance[i]} className="checkbox" disabled /></td>
+                <td><input type="checkbox" checked={ma.daily_attendance[i]} disabled /></td>
             </tr>
         )
     }
@@ -81,7 +81,7 @@ export const DetailSalaryTable = (
     const net_salary = ma.monthly_gross_salary + ma.extra_payment - ma.monthly_tax_amount
 
     return (
-        <div>
+        <div className="print:p-8">
             <div className="space-y-4">
                 <div className="flex gap-8 text-xl">
                     <h1>{year}年{month}月 給与計算管理表</h1>
@@ -121,8 +121,8 @@ export const DetailSalaryTable = (
                                 })}
                                 <th>合計[分]</th>
                                 <th>事務[分]</th>
-                                <th>深夜勤務手当[分]</th>
-                                <th>8時間超過勤務手当[分]</th>
+                                <th>深夜勤務<br/>手当[分]</th>
+                                <th>8時間<br/>超過勤務<br/>手当[分]</th>
                                 <th>交通費</th>
                             </tr>
                         </thead>

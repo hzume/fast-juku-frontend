@@ -11,7 +11,7 @@ export const NavBar = () => {
                 </label>
             </div>
             <div className="flex-1 fixed">
-                <Link className="btn btn-ghost text-xl" href="/">FastJuku</Link>
+                <Link className="btn btn-ghost text-xl" href="/">Fast塾</Link>
             </div>
             <div className="fixed top-2 right-8">
                 <LogoutButton />
