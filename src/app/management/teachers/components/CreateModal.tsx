@@ -1,5 +1,5 @@
 "use client"
-import { Teacher, TeacherBase } from "@/app/types/teacher"
+import { Teacher, TeacherBase } from "@/app/interfaces/teacher"
 import { closeModal, showModal } from "@/components/Modal";
 import { useUser } from "@/providers/UserContext";
 import { useState } from "react";

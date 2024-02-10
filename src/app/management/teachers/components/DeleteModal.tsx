@@ -1,5 +1,5 @@
 "use client"
-import { Teacher } from "@/app/types/teacher"
+import { Teacher } from "@/app/interfaces/teacher"
 import showLoadingModal from "@/components/LoadingModal";
 import { closeModal, showModal } from "@/components/Modal";
 import { DeleteResultModalContent } from "./DeleteResultModal";

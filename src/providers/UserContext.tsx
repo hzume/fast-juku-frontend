@@ -1,6 +1,6 @@
 "use client"
 
-import { User } from "@/app/types/user";
+import { User } from "@/app/interfaces/user";
 import { useContext } from "react";
 import { createContext } from "react";
 

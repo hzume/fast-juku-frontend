@@ -1,5 +1,5 @@
 import { C, timeslot_number2time, timeslot_number_length } from "@/app/const"
-import { MonthlyAttendance, UpdateAttendanceReq } from "@/app/types/timeslot"
+import { MonthlyAttendance, UpdateAttendanceReq } from "@/app/interfaces/timeslot"
 import { Dispatch, SetStateAction, useState } from "react"
 
 

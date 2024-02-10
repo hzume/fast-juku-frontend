@@ -1,12 +1,12 @@
 "use client"
-import { Meeting } from "@/app/types/timeslot";
+import { Meeting } from "@/app/interfaces/timeslot";
 import { Dispatch, SetStateAction, useState } from "react";
 import { showCreateMeetingModal } from "./CreateMeetingModal";
 import { useUser } from "@/providers/UserContext";
 import { useTeacherList, processXLSX } from "@/app/myfunctions";
 import { C } from "@/app/const";
-import { Teacher } from "@/app/types/teacher";
-import { TimeTableData } from "@/app/types/timetable";
+import { Teacher } from "@/app/interfaces/teacher";
+import { TimeTableData } from "@/app/interfaces/timetable";
 import { useSession } from "next-auth/react";
 import { time } from "console";
 import { useApiPath } from "@/providers/ApiPathContext";

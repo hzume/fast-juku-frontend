@@ -1,7 +1,5 @@
-import { C } from "@/app/const"
-import { Meeting } from "@/app/types/timeslot";
-import { Teacher } from "@/app/types/teacher";
-import showLoadingModal from "@/components/LoadingModal";
+import { Meeting } from "@/app/interfaces/timeslot";
+import { Teacher } from "@/app/interfaces/teacher";
 import { closeModal, showModal } from "@/components/Modal"
 import { useUser } from "@/providers/UserContext";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";

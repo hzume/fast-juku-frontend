@@ -1,10 +1,10 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { C } from "@/app/const";
-import { User } from "@/app/types/user";
+import { User } from "@/app/interfaces/user";
 import { SignIn } from "@/components/SignIn";
 import { getServerSession } from "next-auth";
 import { UserProvider } from "./UserContext";
-import { TeacherBase } from "@/app/types/teacher";
+import { TeacherBase } from "@/app/interfaces/teacher";
 import { ApiPathProvider } from "./ApiPathContext";
 import { withCoalescedInvoke } from "next/dist/lib/coalesced-function";
 

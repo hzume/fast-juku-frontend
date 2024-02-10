@@ -1,7 +1,7 @@
 "use client"
 
 import { useTeacherListUrl } from "@/app/myfunctions"
-import { Teacher } from "@/app/types/teacher"
+import { Teacher } from "@/app/interfaces/teacher"
 import { closeModal } from "@/components/Modal"
 import { useUser } from "@/providers/UserContext"
 import { useSWRConfig } from "swr"

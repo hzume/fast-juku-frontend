@@ -1,6 +1,6 @@
 "use client"
 import { C } from "@/app/const"
-import { Teacher } from "@/app/types/teacher"
+import { Teacher } from "@/app/interfaces/teacher"
 import { closeModal, showModal } from "@/components/Modal"
 import { useApiPath } from "@/providers/ApiPathContext"
 import { useUser } from "@/providers/UserContext"

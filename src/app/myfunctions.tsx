@@ -1,12 +1,12 @@
 import Xlsx from "xlsx"
 import { utils } from "xlsx"
 import { C } from "@/app/const"
-import { User } from "@/app/types/user"
+import { User } from "@/app/interfaces/user"
 import useSWR, { useSWRConfig } from "swr"
 import { use } from "react"
 import { useApiPath } from "@/providers/ApiPathContext"
-import { Teacher } from "./types/teacher"
-import { MonthlyAttendance } from "./types/timeslot"
+import { Teacher } from "./interfaces/teacher"
+import { MonthlyAttendance } from "./interfaces/timeslot"
 
 export function processXLSX(wb: Xlsx.WorkBook, year: number, month: number) {
     const xlsx_data = []
@@ -70,3 +70,49 @@ export function useTeacherList(school_id?: string)
     return { data, error, isLoading, mutate }
 }
 
+export function useMonthlyAttendanceList(school_id: string, year: string | null, month: string | null) {
+    const API_PATH = useApiPath()
+    const fetcher = async (url: string) => {
+        if (!year || !month) {
+            return []
+        }
+        const res = await fetch(url)
+        let data = await res.json()
+        data = data.sort((a: MonthlyAttendance, b: MonthlyAttendance) => a.teacher.display_name.localeCompare(b.teacher.display_name))
+        return data
+    }
+    const query = new URLSearchParams({ year: year!, month: month! })
+    const api_url = new URL(`salary/bulk/${school_id}/?${query}`, API_PATH)
+    const { data, error, isLoading, mutate }: 
+        {data: MonthlyAttendance[], error:any, isLoading: boolean, mutate: any} = useSWR(api_url.href, fetcher)
+    return { data, error, isLoading, mutate }
+}
+    
+export function useYearlyAttendanceList(
+    school_id: string, 
+    start_year: string | null, 
+    start_month: string | null,
+    end_year: string | null,
+    end_month: string | null,
+    ) {
+    const API_PATH = useApiPath()
+    const fetcher = async (url: string) => {
+        if (!start_year || !start_month || !end_year || !end_month) {
+            return []
+        }
+        const res = await fetch(url)
+        let data = await res.json()
+        data = data.sort((a: MonthlyAttendance, b: MonthlyAttendance) => a.teacher.display_name.localeCompare(b.teacher.display_name))
+        return data
+    }
+    const query = new URLSearchParams({ 
+        start_year: start_year!, 
+        start_month: start_month!,
+        end_year: end_year!,
+        end_month: end_month!,    
+    })
+    const api_url = new URL(`salary/bulk/${school_id}/between/?${query}`, API_PATH)
+    const { data, error, isLoading, mutate }: 
+        {data: MonthlyAttendance[], error:any, isLoading: boolean, mutate: any} = useSWR(api_url.href, fetcher)
+    return { data, error, isLoading, mutate }
+}

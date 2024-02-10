@@ -1,14 +1,12 @@
 "use client"
-import { MonthlyAttendance, Timeslot, UpdateAttendanceReq } from "@/app/types/timeslot"
+import { MonthlyAttendance, UpdateAttendanceReq } from "@/app/interfaces/timeslot"
 import { useApiPath } from "@/providers/ApiPathContext"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useSearchParams } from "next/navigation"
 import { useRef, useState } from "react"
 import useSWR from "swr"
-import { DetailSalaryTable } from "../../components/DetailSalaryTable"
+import { DetailSalaryTable } from "../../../components/DetailSalaryTable"
 import { LoadingIcon } from "@/components/LoadingIcon"
 import ReactToPrint from "react-to-print"
-import showLoadingModal from "@/components/LoadingModal"
-import { closeModal } from "@/components/Modal"
 
 export default function Page({ params }: { params: { id: string } }) {
     const searchParams = useSearchParams()

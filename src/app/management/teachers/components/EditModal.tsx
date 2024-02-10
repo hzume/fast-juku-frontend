@@ -1,4 +1,4 @@
-import { Teacher } from "@/app/types/teacher"
+import { Teacher } from "@/app/interfaces/teacher"
 import { showModal } from "@/components/Modal";
 import { EditConfirmModalContent } from "./EditConfirmModal";
 

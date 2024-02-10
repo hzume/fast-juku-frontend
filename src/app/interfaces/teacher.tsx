@@ -1,4 +1,4 @@
-export type Teacher = {
+export interface Teacher {
     id: string,
     school_id: string,
     display_name: string,
@@ -12,7 +12,7 @@ export type Teacher = {
     sub?: string,
 }
 
-export type TeacherBase = {
+export interface TeacherBase {
     school_id: string,
     display_name: string,
     given_name: string,

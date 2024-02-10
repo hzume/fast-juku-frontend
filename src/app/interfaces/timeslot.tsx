@@ -1,6 +1,6 @@
 import { Teacher } from "./teacher";
 
-export type Meeting = {
+export interface Meeting {
     school_id: string,
     year: number,
     month: number,
@@ -13,7 +13,7 @@ export type Meeting = {
     teachers: Teacher[],
 }
 
-export type Timeslot = {
+export interface Timeslot {
     day: number,
     start_time: Date,
     end_time: Date,
@@ -21,10 +21,18 @@ export type Timeslot = {
     timeslot_type: string,
 }
 
-export type MonthlyAttendance = {
+export interface BaseAttendance {
+    teacher: Teacher,
+    
+    monthly_gross_salary: number,
+    monthly_tax_amount: number,
+    monthly_trans_fee: number,
+    extra_payment: number,
+}
+
+export interface MonthlyAttendance extends BaseAttendance {
     year: number,
     month: number,
-    teacher: Teacher,
 
     daily_lecture_amount: number[],
     daily_officework_amount: number[],
@@ -33,14 +41,10 @@ export type MonthlyAttendance = {
     daily_attendance: boolean[],
 
     timeslot_list: Timeslot[],
-    monthly_gross_salary: number,
-    monthly_tax_amount: number,
-    monthly_trans_fee: number,
-    extra_payment: number,
     remark: string,
 }
 
-export type UpdateAttendanceReq = {
+export interface UpdateAttendanceReq {
     timeslot_list: Timeslot[],
     extra_payment: number,
     remark: string,

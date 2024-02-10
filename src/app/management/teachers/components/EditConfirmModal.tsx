@@ -1,6 +1,6 @@
 "use client"
 import { C } from "@/app/const"
-import { Teacher, TeacherBase } from "@/app/types/teacher"
+import { Teacher, TeacherBase } from "@/app/interfaces/teacher"
 import showLoadingModal from "@/components/LoadingModal";
 import { closeModal, showModal } from "@/components/Modal"
 import { EditResultModalContent } from "./EditResultModal";

@@ -13,6 +13,8 @@ export const Breadcrumbs = () => {
         "shift-schedule": "シフト表",
         "register-timetable": "時間割登録",
         "view-payslip": "給与明細閲覧",
+        "monthly": "月間",
+        "yearly": "年間",
     }
     //@ts-ignore
     const path_names = path_segments.map(segment => en2ja[segment] || segment)

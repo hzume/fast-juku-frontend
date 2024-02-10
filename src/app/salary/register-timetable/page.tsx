@@ -1,10 +1,9 @@
 "use client"
 
 import React, { useState } from 'react';
-import { processXLSX, useTeacherList } from '@/app/myfunctions';
-import { C } from '@/app/const';
+import { useTeacherList } from '@/app/myfunctions';
 import { useUser } from '@/providers/UserContext';
-import { Meeting } from '@/app/types/timeslot';
+import { Meeting } from '@/app/interfaces/timeslot';
 import { Form } from '../components/Form';
 import { MeetingList } from '../components/MeetingList';
 import { LoadingIcon } from '@/components/LoadingIcon';

@@ -1,6 +1,10 @@
+import { getPreviousYearMonth } from "@/app/myfunctions"
 import Link from "next/link"
 
 export const Drawer = ({ children }: { children: React.ReactNode }) => {
+    const { year, month } = getPreviousYearMonth()
+	const query = new URLSearchParams({ year: year.toString(), month: month.toString() })
+	const view_payslip_monthly_url = `/salary/view-payslip/monthly/?${query}`
     return (
         <div className="drawer lg:drawer-open">
             <input id="my-drawer" type="checkbox" className="drawer-toggle" />
@@ -16,12 +20,9 @@ export const Drawer = ({ children }: { children: React.ReactNode }) => {
                     <li><Link href="/salary">給与計算</Link></li>
                     <li>
                         <ul>
-                            <li>
-                                <Link href="/salary/register-timetable">時間割登録</Link>
-                            </li>
-                            <li>
-                                <Link href="/salary/view-payslip">給与明細閲覧</Link>
-                            </li>
+                            <li><Link href="/salary/register-timetable">時間割登録</Link></li>
+                            <li><Link href={view_payslip_monthly_url}>月間 給与明細閲覧</Link></li>
+                            <li><Link href="/salary/view-payslip/yearly">年間 給与明細閲覧</Link></li>
                         </ul>
                     </li>
                     <li><Link href="/management/teachers">管理メニュー</Link></li>

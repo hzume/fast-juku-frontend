@@ -1,5 +1,5 @@
 "use client"
-import { Teacher } from "@/app/types/teacher";
+import { Teacher } from "@/app/interfaces/teacher";
 import { useUser } from "@/providers/UserContext";
 import { useTeacherList } from "@/app/myfunctions";
 import { ShowCreateModalButton } from "./components/CreateModal";
