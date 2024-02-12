@@ -1,31 +1,46 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { C } from "@/app/const";
 import { User } from "@/app/interfaces/user";
 import { SignIn } from "@/components/SignIn";
 import { getServerSession } from "next-auth";
 import { UserProvider } from "./UserContext";
-import { TeacherBase } from "@/app/interfaces/teacher";
 import { ApiPathProvider } from "./ApiPathContext";
-import { withCoalescedInvoke } from "next/dist/lib/coalesced-function";
 
 
 export const DataFetch = async ({ children }: { children: React.ReactNode }) => {
     const session = await getServerSession(authOptions);
-    if (!session) {
-        return <SignIn />
+    let user: User
+    const guest_user: User = {
+        id: "guest",
+        school_id: "guest",
+        family_name: "ゲスト",
+        given_name: "",
+        teacher_type: "guest"
     }
-    //@ts-ignore 
-    const sub = session.user?.id;
-    const api_url = new URL(`teachers/sub/${sub}`, process.env.API_PATH)
-    const res = await fetch(api_url.href, {
-        method: "GET"
-    });
-    const data = await res.json();
-    const user: User = {
-        id: data.id,
-        school_id: data.school_id,
-        family_name: data.family_name,
-        given_name: data.given_name,
+
+    if (session) {
+        //@ts-ignore 
+        const sub = session.user?.id;
+        const api_url = new URL(`teachers/sub/${sub}`, process.env.API_PATH)
+        const res = await fetch(api_url.href, {
+            method: "GET"
+        });
+        const data = await res.json();
+
+        if (data.id) {
+            user = {
+                id: data.id,
+                school_id: data.school_id,
+                family_name: data.family_name,
+                given_name: data.given_name,
+                teacher_type: data.teacher_type,
+            }
+        }
+        else {
+            user = guest_user
+        }
+    }
+    else {
+        user = guest_user
     }
 
     return (

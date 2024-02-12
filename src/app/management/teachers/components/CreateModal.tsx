@@ -32,6 +32,7 @@ const CreateModalContent = () => {
         lecture_hourly_pay: "",
         office_hourly_pay: "",
         trans_fee: "",
+        fixed_salary: "",
     })
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         showLoadingModal()
@@ -44,6 +45,7 @@ const CreateModalContent = () => {
             lecture_hourly_pay: Number(formValues.lecture_hourly_pay),
             office_hourly_pay: Number(formValues.office_hourly_pay),
             trans_fee: Number(formValues.trans_fee),
+            fixed_salary: Number(formValues.fixed_salary),
             teacher_type: "teacher",
         }
         const api_url = new URL(`/teachers`, API_PATH);
@@ -117,7 +119,14 @@ const CreateModalContent = () => {
                     </div>
                     <input onChange={onChangeText} name="office_hourly_pay" type="number" min={0} className="input input-bordered w-full" />
                 </div>
-
+            </div>
+            <div className="md:flex gap-8">
+                <div>
+                    <div className="label">
+                        <div className="label-text">固定給</div>
+                    </div>
+                    <input onChange={onChangeText} name="fixed_salary" type="number" min={0} className="input input-bordered w-full" />
+                </div>
                 <div>
                     <div className="label">
                         <div className="label-text">交通費</div>
@@ -151,6 +160,7 @@ const CreateResultModalContent = ({ teacher }: { teacher: Teacher }) => {
                             <th>名前</th>
                             <th>授業時給</th>
                             <th>事務時給</th>
+                            <th>固定給</th>
                             <th>交通費</th>
                         </tr>
                     </thead>
@@ -162,6 +172,7 @@ const CreateResultModalContent = ({ teacher }: { teacher: Teacher }) => {
                             <th>{teacher.given_name}</th>
                             <th>{teacher.lecture_hourly_pay}</th>
                             <th>{teacher.office_hourly_pay}</th>
+                            <th>{teacher.fixed_salary}</th>
                             <th>{teacher.trans_fee}</th>
                         </tr>
                     </tbody>

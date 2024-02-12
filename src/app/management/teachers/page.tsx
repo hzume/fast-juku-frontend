@@ -15,7 +15,8 @@ const TeacherRow = ({ teacher }: { teacher: Teacher }) => {
             <td>{name}</td>
             <td>{teacher.lecture_hourly_pay}</td>
             <td>{teacher.office_hourly_pay}</td>
-            <td>{teacher.trans_fee}</td>
+            <td>{teacher.fixed_salary}</td>
+            <td>{teacher.trans_fee}</td>            
             <td><ShowEditModalButton teacher={teacher} /></td>
             <td><ShowDeleteModalButton teacher={teacher} /></td>
         </tr>
@@ -41,6 +42,7 @@ export default function Page() {
                             <th>名前</th>
                             <th>授業時給</th>
                             <th>事務時給</th>
+                            <th>固定給</th>
                             <th>交通費</th>
                         </tr>
                     </thead>

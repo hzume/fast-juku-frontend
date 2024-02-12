@@ -44,8 +44,16 @@ export interface MonthlyAttendance extends BaseAttendance {
     remark: string,
 }
 
+export interface TimeslotJS {
+    year: number,
+    month: number,
+    day: number,
+    timeslot_number: number,
+    timeslot_type: string,
+}
+
 export interface UpdateAttendanceReq {
-    timeslot_list: Timeslot[],
+    timeslot_js_list: TimeslotJS[],
     extra_payment: number,
     remark: string,
     teacher: Teacher,

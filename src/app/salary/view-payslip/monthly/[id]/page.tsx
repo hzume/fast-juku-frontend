@@ -1,5 +1,5 @@
 "use client"
-import { MonthlyAttendance, UpdateAttendanceReq } from "@/app/interfaces/timeslot"
+import { MonthlyAttendance, TimeslotJS, UpdateAttendanceReq } from "@/app/interfaces/timeslot"
 import { useApiPath } from "@/providers/ApiPathContext"
 import { useSearchParams } from "next/navigation"
 import { useRef, useState } from "react"
@@ -7,6 +7,7 @@ import useSWR from "swr"
 import { DetailSalaryTable } from "../../../components/DetailSalaryTable"
 import { LoadingIcon } from "@/components/LoadingIcon"
 import ReactToPrint from "react-to-print"
+
 
 export default function Page({ params }: { params: { id: string } }) {
     const searchParams = useSearchParams()
@@ -18,19 +19,27 @@ export default function Page({ params }: { params: { id: string } }) {
     const fetcher = async (url: string) => {
         const res = await fetch(url)
         const data: MonthlyAttendance = await res.json()
+        const timeslot_js_list: TimeslotJS[] = []
         for (let timeslot of data.timeslot_list) {
-            timeslot.start_time = new Date(timeslot.start_time)
-            timeslot.end_time = new Date(timeslot.end_time)
+            const timeslot_js: TimeslotJS = {
+                year: Number(year),
+                month: Number(month),
+                day: timeslot.day,
+                timeslot_number: timeslot.timeslot_number,
+                timeslot_type: timeslot.timeslot_type
+            }
+            timeslot_js_list.push(timeslot_js)
         }
         setUpdateAttendanceValues({
-            timeslot_list: data.timeslot_list,
+            timeslot_js_list: timeslot_js_list,
             teacher: data.teacher,
             extra_payment: data.extra_payment,
             remark: data.remark,
         })
         return data
     }
-    const { data: ma, error, isLoading, mutate } = useSWR(api_url.href, fetcher)
+    const option = {revalidateOnFocus: false}
+    const { data: ma, error, isLoading, mutate } = useSWR(api_url.href, fetcher, option)
     const componentRef = useRef(null)
 
     const onChangeExtraPayment = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -70,8 +70,16 @@ export function useTeacherList(school_id?: string)
     return { data, error, isLoading, mutate }
 }
 
-export function useMonthlyAttendanceList(school_id: string, year: string | null, month: string | null) {
+
+export function useMonthlyAttendanceListUrl(school_id: string, year: string | null, month: string | null) {
     const API_PATH = useApiPath()
+    const query = new URLSearchParams({ year: year!, month: month! })
+    const api_url = new URL(`salary/bulk/${school_id}/?${query}`, API_PATH)
+    return api_url
+}
+
+export function useMonthlyAttendanceList(school_id: string, year: string | null, month: string | null) {
+    const api_url = useMonthlyAttendanceListUrl(school_id, year, month)
     const fetcher = async (url: string) => {
         if (!year || !month) {
             return []
@@ -81,8 +89,6 @@ export function useMonthlyAttendanceList(school_id: string, year: string | null,
         data = data.sort((a: MonthlyAttendance, b: MonthlyAttendance) => a.teacher.display_name.localeCompare(b.teacher.display_name))
         return data
     }
-    const query = new URLSearchParams({ year: year!, month: month! })
-    const api_url = new URL(`salary/bulk/${school_id}/?${query}`, API_PATH)
     const { data, error, isLoading, mutate }: 
         {data: MonthlyAttendance[], error:any, isLoading: boolean, mutate: any} = useSWR(api_url.href, fetcher)
     return { data, error, isLoading, mutate }

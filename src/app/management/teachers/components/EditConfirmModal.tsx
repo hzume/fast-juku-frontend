@@ -20,6 +20,7 @@ export const EditConfirmModalContent = (
         lecture_hourly_pay: editedTeacher?.lecture_hourly_pay !== teacher?.lecture_hourly_pay,
         office_hourly_pay: editedTeacher?.office_hourly_pay !== teacher?.office_hourly_pay,
         trans_fee: editedTeacher?.trans_fee !== teacher?.trans_fee,
+        fixed_salary: editedTeacher?.fixed_salary !== teacher?.fixed_salary,
     }
 
     const isRed = (is_different: boolean) => {
@@ -41,6 +42,7 @@ export const EditConfirmModalContent = (
             lecture_hourly_pay: editedTeacher.lecture_hourly_pay,
             office_hourly_pay: editedTeacher.office_hourly_pay,
             trans_fee: editedTeacher.trans_fee,
+            fixed_salary: editedTeacher.fixed_salary,
             teacher_type: editedTeacher.teacher_type,
             sub: editedTeacher.sub,
         }
@@ -80,6 +82,7 @@ export const EditConfirmModalContent = (
                             <th>名前</th>
                             <th>授業時給</th>
                             <th>事務時給</th>
+                            <th>固定給</th>
                             <th>交通費</th>
                         </tr>
                     </thead>
@@ -91,6 +94,7 @@ export const EditConfirmModalContent = (
                             <th className={isRed(isDifferent.given_name)}>{editedTeacher?.given_name}</th>
                             <th className={isRed(isDifferent.lecture_hourly_pay)}>{editedTeacher?.lecture_hourly_pay}</th>
                             <th className={isRed(isDifferent.office_hourly_pay)}>{editedTeacher?.office_hourly_pay}</th>
+                            <th className={isRed(isDifferent.fixed_salary)}>{editedTeacher?.fixed_salary}</th>
                             <th className={isRed(isDifferent.trans_fee)}>{editedTeacher?.trans_fee}</th>
                         </tr>
                     </tbody>
@@ -105,6 +109,7 @@ export const EditConfirmModalContent = (
                             <th>{teacher?.given_name}</th>
                             <th>{teacher?.lecture_hourly_pay}</th>
                             <th>{teacher?.office_hourly_pay}</th>
+                            <th>{teacher?.fixed_salary}</th>
                             <th>{teacher?.trans_fee}</th>
                         </tr>
                     </tbody>

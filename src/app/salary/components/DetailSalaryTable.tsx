@@ -1,5 +1,5 @@
 import { C, timeslot_number2time, timeslot_number_length } from "@/app/const"
-import { MonthlyAttendance, UpdateAttendanceReq } from "@/app/interfaces/timeslot"
+import { MonthlyAttendance, TimeslotJS, UpdateAttendanceReq } from "@/app/interfaces/timeslot"
 import { Dispatch, SetStateAction, useState } from "react"
 
 
@@ -19,7 +19,7 @@ export const DetailSalaryTable = (
     }) => {
     const DetailSalaryRow = ({ i }: { i: number }) => {
         const isAttendInit: boolean[] = new Array(timeslot_number_length).fill(false)
-        for (let timeslot of updateAttendanceValues.timeslot_list) {
+        for (let timeslot of updateAttendanceValues.timeslot_js_list) {
             if (timeslot.day != i + 1) continue
             if (timeslot.timeslot_number == 0) continue
             isAttendInit[timeslot.timeslot_number - 1] = true
@@ -35,29 +35,24 @@ export const DetailSalaryTable = (
             })            
 
             setUpdateAttendanceValues((prev) => {
-                const new_timeslot_list = [...updateAttendanceValues.timeslot_list]
-                const start_time_hour = timeslot_number2time.get(j + 1)!.split('-')[0].split(':')[0]
-                const start_time_minute = timeslot_number2time.get(j + 1)!.split('-')[0].split(':')[1]
-                const end_time_hour = timeslot_number2time.get(j + 1)!.split('-')[1].split(':')[0]
-                const end_time_minute = timeslot_number2time.get(j + 1)!.split('-')[1].split(':')[1]
-                const start_time = new Date(Number(year), Number(month) - 1, i + 1, Number(start_time_hour), Number(start_time_minute))
-                const end_time = new Date(Number(year), Number(month) - 1, i + 1, Number(end_time_hour), Number(end_time_minute))
+                const new_timeslot_js_list = [...updateAttendanceValues.timeslot_js_list]
+                const timeslot_js: TimeslotJS = {
+                    year: Number(year), 
+                    month: Number(month),
+                    day: i + 1,
+                    timeslot_number: j + 1,
+                    timeslot_type: "lecture"
+                } 
                 if (event.target.checked) {
-                    new_timeslot_list.push({
-                        day: i + 1,
-                        start_time: start_time,
-                        end_time: end_time,
-                        timeslot_number: j + 1,
-                        timeslot_type: "lecture",
-                    })
+                    new_timeslot_js_list.push(timeslot_js)
                 }
                 else {
-                    const index = new_timeslot_list.findIndex((timeslot) => {
-                        return timeslot.day == i + 1 && timeslot.timeslot_number == j + 1
+                    const index = new_timeslot_js_list.findIndex((timeslot_js) => {
+                        return timeslot_js.day == i + 1 && timeslot_js.timeslot_number == j + 1
                     })
-                    new_timeslot_list.splice(index, 1)
+                    new_timeslot_js_list.splice(index, 1)
                 }
-                return { ...prev, timeslot_list: new_timeslot_list }
+                return { ...prev, timeslot_js_list: new_timeslot_js_list }
             })
         }
         return (

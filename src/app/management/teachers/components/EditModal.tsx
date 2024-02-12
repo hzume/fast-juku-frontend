@@ -10,7 +10,7 @@ export const ShowEditModalButton = ({ teacher }: { teacher: Teacher }) => {
                 title: '講師情報を編集',
                 children: <EditModalContent teacher={teacher} />
             })
-        }>
+            }>
             編集
         </button>
     )
@@ -29,6 +29,7 @@ const EditModalContent = ({ teacher }: { teacher: Teacher }) => {
             lecture_hourly_pay: data.lecture_hourly_pay.toString() === "" ? teacher.lecture_hourly_pay : Number(data.lecture_hourly_pay),
             office_hourly_pay: data.office_hourly_pay.toString() === "" ? teacher.office_hourly_pay : Number(data.office_hourly_pay),
             trans_fee: data.trans_fee.toString() === "" ? teacher.trans_fee : Number(data.trans_fee),
+            fixed_salary: data.fixed_salary.toString() == "" ? teacher.fixed_salary : Number(data.fixed_salary),
             teacher_type: teacher.teacher_type,
             sub: teacher.sub,
             school_id: teacher.school_id,
@@ -82,7 +83,14 @@ const EditModalContent = ({ teacher }: { teacher: Teacher }) => {
                     </div>
                     <input name="office_hourly_pay" type="number" min={0} defaultValue={teacher?.office_hourly_pay.toString()} className="input input-bordered w-full" />
                 </div>
-
+            </div>
+            <div className="md:flex gap-8">
+                <div>
+                    <div className="label">
+                        <div className="label-text">固定給</div>
+                    </div>
+                    <input name="fixed_salary" type="number" min={0} defaultValue={teacher?.fixed_salary.toString()} className="input input-bordered w-full" />
+                </div>
                 <div>
                     <div className="label">
                         <div className="label-text">交通費</div>

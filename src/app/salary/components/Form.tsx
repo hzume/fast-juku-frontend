@@ -82,7 +82,7 @@ export const Form = ({
                 },
                 body: JSON.stringify(timeTableData),
             });
-            router.push(`/salary/view-payslip/?${query}`)
+            router.push(`/salary/view-payslip/monthly/?${query}`)
             alert('送信に成功しました')
         } catch (error) {
             console.error(error);
