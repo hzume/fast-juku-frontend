@@ -11,8 +11,10 @@ export const Breadcrumbs = () => {
         "timetable": "時間割作成",
         "salary": "給与計算",
         "shift-schedule": "シフト表",
-        "create": "新規作成",
-        "view": "閲覧",
+        "register-timetable": "時間割登録",
+        "view-payslip": "給与明細閲覧",
+        "monthly": "月間",
+        "yearly": "年間",
     }
     //@ts-ignore
     const path_names = path_segments.map(segment => en2ja[segment] || segment)

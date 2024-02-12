@@ -1,34 +1,18 @@
 "use client"
-import { C } from "@/app/const"
-import { Teacher } from "@/app/types/teacher"
-import { closeModal, showModal } from "@/components/Modal"
-import { useApiPath } from "@/providers/ApiPathContext"
+import { useTeacherListUrl } from "@/app/myfunctions"
+import { Teacher } from "@/app/interfaces/teacher"
+import { closeModal } from "@/components/Modal"
 import { useUser } from "@/providers/UserContext"
 import { useSWRConfig } from "swr"
 
 
-export const showDeleteResultModal = (
-    teacher: Teacher,
-) => {
-    showModal({
-        title: '次の講師の削除が完了しました',
-        children: <DeleteResultModalContent teacher={teacher}/>,
-        canClose: false,
-    });
-}
-
-const DeleteResultModalContent = ({teacher}:{teacher: Teacher}) => {
-    const { mutate } = useSWRConfig()
+export const DeleteResultModalContent = ({teacher}:{teacher: Teacher}) => {
     const user = useUser()
-    const API_PATH = useApiPath()
-    if (!user) return <span className="loading loading-spinner loading-lg"></span>
-
-    const query = new URLSearchParams({ school_id: user.school_id });
-    const api_url = new URL(`teachers/?${query}`, API_PATH)
-
+    const { mutate } = useSWRConfig()
+    const api_url = useTeacherListUrl(user?.school_id)
     const onClick = () => {
-        closeModal()
         mutate(api_url.href)
+        closeModal()
     }
     const name = `${teacher.family_name} ${teacher.given_name}`;
     return (

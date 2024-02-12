@@ -1,21 +1,11 @@
 "use client"
 import { C } from "@/app/const"
-import { Teacher, TeacherBase } from "@/app/types/teacher"
+import { Teacher, TeacherBase } from "@/app/interfaces/teacher"
 import showLoadingModal from "@/components/LoadingModal";
 import { closeModal, showModal } from "@/components/Modal"
-import { showEditResultModal } from "./EditResultModal";
+import { EditResultModalContent } from "./EditResultModal";
 import { useApiPath } from "@/providers/ApiPathContext";
 
-
-export const showEditConfirmModal = (
-    teacher: Teacher,
-    editedTeacher: Teacher,
-) => {
-    showModal({
-        title: '編集内容の確定',
-        children: <EditConfirmModalContent teacher={teacher} editedTeacher={editedTeacher} />
-    });
-}
 
 export const EditConfirmModalContent = (
     { teacher, editedTeacher }
@@ -30,6 +20,7 @@ export const EditConfirmModalContent = (
         lecture_hourly_pay: editedTeacher?.lecture_hourly_pay !== teacher?.lecture_hourly_pay,
         office_hourly_pay: editedTeacher?.office_hourly_pay !== teacher?.office_hourly_pay,
         trans_fee: editedTeacher?.trans_fee !== teacher?.trans_fee,
+        fixed_salary: editedTeacher?.fixed_salary !== teacher?.fixed_salary,
     }
 
     const isRed = (is_different: boolean) => {
@@ -51,6 +42,7 @@ export const EditConfirmModalContent = (
             lecture_hourly_pay: editedTeacher.lecture_hourly_pay,
             office_hourly_pay: editedTeacher.office_hourly_pay,
             trans_fee: editedTeacher.trans_fee,
+            fixed_salary: editedTeacher.fixed_salary,
             teacher_type: editedTeacher.teacher_type,
             sub: editedTeacher.sub,
         }
@@ -67,7 +59,11 @@ export const EditConfirmModalContent = (
                 const newTeacher: Teacher = {
                     ...data
                 }
-                showEditResultModal(newTeacher)
+                showModal({
+                    title: '編集が完了しました',
+                    children: <EditResultModalContent teacher={teacher} />,
+                    canClose: false,
+                });
             })
             .catch(error => {
                 console.error(error)
@@ -86,6 +82,7 @@ export const EditConfirmModalContent = (
                             <th>名前</th>
                             <th>授業時給</th>
                             <th>事務時給</th>
+                            <th>固定給</th>
                             <th>交通費</th>
                         </tr>
                     </thead>
@@ -97,6 +94,7 @@ export const EditConfirmModalContent = (
                             <th className={isRed(isDifferent.given_name)}>{editedTeacher?.given_name}</th>
                             <th className={isRed(isDifferent.lecture_hourly_pay)}>{editedTeacher?.lecture_hourly_pay}</th>
                             <th className={isRed(isDifferent.office_hourly_pay)}>{editedTeacher?.office_hourly_pay}</th>
+                            <th className={isRed(isDifferent.fixed_salary)}>{editedTeacher?.fixed_salary}</th>
                             <th className={isRed(isDifferent.trans_fee)}>{editedTeacher?.trans_fee}</th>
                         </tr>
                     </tbody>
@@ -111,6 +109,7 @@ export const EditConfirmModalContent = (
                             <th>{teacher?.given_name}</th>
                             <th>{teacher?.lecture_hourly_pay}</th>
                             <th>{teacher?.office_hourly_pay}</th>
+                            <th>{teacher?.fixed_salary}</th>
                             <th>{teacher?.trans_fee}</th>
                         </tr>
                     </tbody>

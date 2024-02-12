@@ -1,7 +1,5 @@
-import { C } from "@/app/const"
-import { Meeting } from "@/app/types/timeslot";
-import { Teacher } from "@/app/types/teacher";
-import showLoadingModal from "@/components/LoadingModal";
+import { Meeting } from "@/app/interfaces/timeslot";
+import { Teacher } from "@/app/interfaces/teacher";
 import { closeModal, showModal } from "@/components/Modal"
 import { useUser } from "@/providers/UserContext";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
@@ -49,8 +47,10 @@ const CreateMeetingModal = ({
             year: Number(formValues.year),
             month: Number(formValues.month),
             day: Number(data.day),
-            start_time: data.start_time.toString(),
-            end_time: data.end_time.toString(),
+            //@ts-ignore
+            start_time: data.start_time, 
+            //@ts-ignore
+            end_time: data.end_time, 
             timeslot_type: "office_work",
             timeslot_number: 0,
             teachers: attendTeacherList,

@@ -1,6 +1,6 @@
 import { Meeting } from "./timeslot";
 
-export type TimeTableData = {
+export interface TimeTableData {
     content: unknown[],
     meetings: Meeting[],
 }

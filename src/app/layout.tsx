@@ -10,7 +10,7 @@ import { SWRConfig } from 'swr'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'FastJuku',
+  title: 'Fast塾',
   description: 'FastJukuのホームページです',
 }
 
@@ -20,8 +20,8 @@ export default function RootLayout({ children, }: { children: React.ReactNode })
       <body className={inter.className}>
         <DataFetch>
             <PageLayout>
-              <ModalManager />
-              {children}
+              <ModalManager />        
+              {children}              
             </PageLayout>          
         </DataFetch>
       </body>

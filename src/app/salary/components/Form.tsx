@@ -1,18 +1,19 @@
 "use client"
-import { Meeting } from "@/app/types/timeslot";
+import { Meeting } from "@/app/interfaces/timeslot";
 import { Dispatch, SetStateAction, useState } from "react";
 import { showCreateMeetingModal } from "./CreateMeetingModal";
 import { useUser } from "@/providers/UserContext";
 import { useTeacherList, processXLSX } from "@/app/myfunctions";
 import { C } from "@/app/const";
-import { Teacher } from "@/app/types/teacher";
-import { TimeTableData } from "@/app/types/timetable";
+import { Teacher } from "@/app/interfaces/teacher";
+import { TimeTableData } from "@/app/interfaces/timetable";
 import { useSession } from "next-auth/react";
 import { time } from "console";
 import { useApiPath } from "@/providers/ApiPathContext";
 import { read } from "xlsx";
 import officeCrypto from "officecrypto-tool";
 import { useRouter } from "next/navigation";
+import { LoadingIcon } from "@/components/LoadingIcon";
 
 function toArrayBuffer(buffer: Buffer) {
     var ab = new ArrayBuffer(buffer.length);
@@ -39,7 +40,7 @@ export const Form = ({
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const router = useRouter()
 
-    if (!user) return <span className="loading loading-lg"></span>
+    if (!user) return <LoadingIcon/>
 
     const onChangeText = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
@@ -81,7 +82,7 @@ export const Form = ({
                 },
                 body: JSON.stringify(timeTableData),
             });
-            router.push(`/salary/view/?${query}`)
+            router.push(`/salary/view-payslip/monthly/?${query}`)
             alert('送信に成功しました')
         } catch (error) {
             console.error(error);
@@ -89,7 +90,7 @@ export const Form = ({
         }
     };
 
-    if (isLoading) return <span className="loading loading-lg"></span>
+    if (isLoading) return <LoadingIcon/>
 
     return (
         <form className="form-control w-1/2 max-w-full space-y-4" onSubmit={onSubmit}>

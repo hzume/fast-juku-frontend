@@ -1,9 +1,7 @@
-"use client";
-import { C } from "@/app/const";
+"use client"
 import { useApiPath } from "@/providers/ApiPathContext";
-import React, { use } from "react";
 
-export default function Page() {
+export const CreateMetaForm = () => {
     const API_PATH = useApiPath();
     const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -12,12 +10,12 @@ export default function Page() {
         const api_url = new URL(`metas`, API_PATH)
         try {
             const res = await fetch(api_url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data_form),
-                });
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data_form),
+            });
             const json = await res.json();
             console.log(json);
             if (res.ok) {
@@ -30,8 +28,10 @@ export default function Page() {
     }
     return (
         <form className="form-control" onSubmit={onSubmit}>
-            <input type="text" name='school_name' placeholder="type school_name" className="input w-full max-w-xs"/>
-            <button type="submit" className="btn btn-primary">Submit</button>
+            <div className="flex gap-2">
+                <input type="text" name='school_name' placeholder="type school_name" className="input input-bordered w-full max-w-xs" />
+                <button type="submit" className="btn btn-primary">Submit</button>
+            </div>
         </form>
     )
 }

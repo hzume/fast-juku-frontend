@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { getPreviousYearMonth } from "../myfunctions"
+import { getPreviousYearMonth } from "../../myfunctions"
 
 export default function Page() {
 	const { year, month } = getPreviousYearMonth()
@@ -9,13 +9,6 @@ export default function Page() {
 	const url = `/salary/view-payslip/monthly/?${query}`
 	return (
 		<div className="space-y-4">
-			<div>
-				<Link href="/salary/register-timetable">
-					<button className="btn btn-outline btn-wide">
-						時間割登録
-					</button>
-				</Link>
-			</div>
 			<div className="flex gap-2">
 				<Link href={url}>
 					<button className="btn btn-outline btn-wide">

@@ -1,10 +1,11 @@
 "use client"
 import { C } from "@/app/const"
-import { Teacher } from "@/app/types/teacher"
+import { Teacher } from "@/app/interfaces/teacher"
+import { useMonthlyAttendanceListUrl } from "@/app/myfunctions"
 import { closeModal, showModal } from "@/components/Modal"
 import { useApiPath } from "@/providers/ApiPathContext"
 import { useUser } from "@/providers/UserContext"
-import { useSWRConfig } from "swr"
+import { mutate, useSWRConfig } from "swr"
 
 
 export const showDeleteResultModal = (
@@ -13,14 +14,18 @@ export const showDeleteResultModal = (
 ) => {
     showModal({
         title: `${year}年${month}月の給与情報を削除しました。`,
-        children: <DeleteResultModalContent />,
+        children: <DeleteResultModalContent year={year} month={month}/>,
         canClose: false,
     });
 }
 
-const DeleteResultModalContent = () => {
+const DeleteResultModalContent = ({year, month}: {year: string, month:string}) => {
+    const user = useUser()
+    const api_url = useMonthlyAttendanceListUrl(user?.school_id!, year, month)
+    const { mutate } = useSWRConfig()
     const onClick = () => {
         closeModal()
+        mutate(api_url.href)
     }
     return (
         <div className="space-y-4">

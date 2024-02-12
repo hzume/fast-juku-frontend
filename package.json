@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "export": "next build && next export",
-    "serve": "npm run export && serve ./out"
+    "serve": "npm run export && serve ./out",
+    "tsc": "tsc"
   },
   "dependencies": {
     "csvtojson": "^2.0.10",
@@ -20,6 +21,7 @@
     "officecrypto-tool": "^0.0.8",
     "react": "^18",
     "react-dom": "^18",
+    "react-to-print": "^2.14.15",
     "serve": "^14.2.1",
     "sheetjs": "^2.0.0",
     "swr": "^2.2.4",

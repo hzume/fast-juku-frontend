@@ -1,10 +1,12 @@
 import Xlsx from "xlsx"
 import { utils } from "xlsx"
 import { C } from "@/app/const"
-import { User } from "@/app/types/user"
-import useSWR from "swr"
+import { User } from "@/app/interfaces/user"
+import useSWR, { useSWRConfig } from "swr"
 import { use } from "react"
 import { useApiPath } from "@/providers/ApiPathContext"
+import { Teacher } from "./interfaces/teacher"
+import { MonthlyAttendance } from "./interfaces/timeslot"
 
 export function processXLSX(wb: Xlsx.WorkBook, year: number, month: number) {
     const xlsx_data = []
@@ -23,7 +25,7 @@ export function processXLSX(wb: Xlsx.WorkBook, year: number, month: number) {
     return xlsx_data
 }
 
-export function getPreviousYearMonth() {
+export function getPreviousYearMonth(): { year: number, month: number } {
     const date = new Date()
     let year: number
 	let month: number
@@ -43,12 +45,80 @@ export function getPreviousYearMonth() {
 	}
     return { year, month }
 }
-    
 
-export function useTeacherList(school_id?: string) {
+
+export function useTeacherListUrl(school_id?: string): URL {
     const API_PATH = useApiPath()
     const api_url = new URL(`teachers/bulk/${school_id}`, API_PATH)
-    const fetcher = (url: string) => fetch(url).then(res => res.json())
-    const { data, error, isLoading, mutate } = useSWR(api_url.href, fetcher)
+    return api_url
+}
+    
+
+export function useTeacherList(school_id?: string) 
+    : { data: Teacher[], error: any, isLoading: boolean, mutate: any } {
+    const api_url = useTeacherListUrl(school_id)
+    const fetcher = async (url: string) => {
+        const res = await fetch(url)
+        let data = await res.json()
+        data = data.sort((a: Teacher, b: Teacher) => a.display_name.localeCompare(b.display_name))
+        return data
+    }
+    
+    const { data, error, isLoading, mutate }:
+        { data: Teacher[], error: any, isLoading: boolean, mutate: any} = useSWR(api_url.href, fetcher)
+
+    return { data, error, isLoading, mutate }
+}
+
+
+export function useMonthlyAttendanceListUrl(school_id: string, year: string | null, month: string | null) {
+    const API_PATH = useApiPath()
+    const query = new URLSearchParams({ year: year!, month: month! })
+    const api_url = new URL(`salary/bulk/${school_id}/?${query}`, API_PATH)
+    return api_url
+}
+
+export function useMonthlyAttendanceList(school_id: string, year: string | null, month: string | null) {
+    const api_url = useMonthlyAttendanceListUrl(school_id, year, month)
+    const fetcher = async (url: string) => {
+        if (!year || !month) {
+            return []
+        }
+        const res = await fetch(url)
+        let data = await res.json()
+        data = data.sort((a: MonthlyAttendance, b: MonthlyAttendance) => a.teacher.display_name.localeCompare(b.teacher.display_name))
+        return data
+    }
+    const { data, error, isLoading, mutate }: 
+        {data: MonthlyAttendance[], error:any, isLoading: boolean, mutate: any} = useSWR(api_url.href, fetcher)
+    return { data, error, isLoading, mutate }
+}
+    
+export function useYearlyAttendanceList(
+    school_id: string, 
+    start_year: string | null, 
+    start_month: string | null,
+    end_year: string | null,
+    end_month: string | null,
+    ) {
+    const API_PATH = useApiPath()
+    const fetcher = async (url: string) => {
+        if (!start_year || !start_month || !end_year || !end_month) {
+            return []
+        }
+        const res = await fetch(url)
+        let data = await res.json()
+        data = data.sort((a: MonthlyAttendance, b: MonthlyAttendance) => a.teacher.display_name.localeCompare(b.teacher.display_name))
+        return data
+    }
+    const query = new URLSearchParams({ 
+        start_year: start_year!, 
+        start_month: start_month!,
+        end_year: end_year!,
+        end_month: end_month!,    
+    })
+    const api_url = new URL(`salary/bulk/${school_id}/between/?${query}`, API_PATH)
+    const { data, error, isLoading, mutate }: 
+        {data: MonthlyAttendance[], error:any, isLoading: boolean, mutate: any} = useSWR(api_url.href, fetcher)
     return { data, error, isLoading, mutate }
 }

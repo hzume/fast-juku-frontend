@@ -1,31 +1,16 @@
 "use client"
-import { C } from "@/app/const"
-import { Teacher, TeacherBase } from "@/app/types/teacher"
-import { closeModal, showModal } from "@/components/Modal"
-import { useApiPath } from "@/providers/ApiPathContext"
+
+import { useTeacherListUrl } from "@/app/myfunctions"
+import { Teacher } from "@/app/interfaces/teacher"
+import { closeModal } from "@/components/Modal"
 import { useUser } from "@/providers/UserContext"
 import { useSWRConfig } from "swr"
 
 
-export const showEditResultModal = (
-    teacher: Teacher,
-) => {
-    showModal({
-        title: '編集が完了しました',
-        children: <EditResultModalContent teacher={teacher} />,
-        canClose: false,
-    });
-}
-
-const EditResultModalContent = ({ teacher }: { teacher: Teacher }) => {
-    const { mutate } = useSWRConfig()
+export const EditResultModalContent = ({ teacher }: { teacher: Teacher }) => {
     const user = useUser()
-    const API_PATH = useApiPath()
-    if (!user) return <span className="loading loading-spinner loading-lg"></span>
-
-    const query = new URLSearchParams({ school_id: user.school_id });
-    const api_url = new URL(`teachers/?${query}`, API_PATH)
-
+    const api_url = useTeacherListUrl(user?.school_id)
+    const { mutate } = useSWRConfig() 
     const onClick = () => {
         mutate(api_url.href)
         closeModal()

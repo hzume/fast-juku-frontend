@@ -1,20 +1,27 @@
 "use client"
-import { C } from "@/app/const";
-import { Teacher } from "@/app/types/teacher"
+import { Teacher } from "@/app/interfaces/teacher"
 import showLoadingModal from "@/components/LoadingModal";
 import { closeModal, showModal } from "@/components/Modal";
-import { showDeleteResultModal } from "./DeleteResultModal";
+import { DeleteResultModalContent } from "./DeleteResultModal";
 import { useApiPath } from "@/providers/ApiPathContext";
+import { useUser } from "@/providers/UserContext";
 
 
-export const showDeleteModal = (teacher: Teacher) => {
-    showModal({
-        title: '削除の確認',
-        children: <DeleteModalContent teacher={teacher} />
-    });
-};
+export const ShowDeleteModalButton = ({ teacher }: { teacher: Teacher }) => {
+    return (
+        <button type="button" className="btn btn-outline btn-sm btn-error"
+            onClick={() => showModal({
+                title: '削除の確認',
+                children: <DeleteModalContent teacher={teacher} />
+            })
+            }>
+            削除
+        </button>
+    )
+}
 
 const DeleteModalContent = ({ teacher }: { teacher: Teacher }) => {
+    const user = useUser();
     const API_PATH = useApiPath();
     const name = `${teacher.family_name} ${teacher.given_name}`;
     const deleteTeacher = () => {
@@ -24,11 +31,13 @@ const DeleteModalContent = ({ teacher }: { teacher: Teacher }) => {
             method: 'DELETE',
         })
             .then(res => res.json())
-            .then(data => {
-                closeModal()
-                showDeleteResultModal(teacher)
-            })
+            .then(data => showModal({
+                title: '次の講師の削除が完了しました',
+                children: <DeleteResultModalContent teacher={teacher}/>,
+                canClose: false,
+            }))
     }
+
     return (
         <div className="w-full space-y-4 pt-4">
             <div>

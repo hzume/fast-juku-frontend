@@ -1,21 +1,21 @@
 "use client"
 
 import React, { useState } from 'react';
-import { processXLSX, useTeacherList } from '@/app/myfunctions';
-import { C } from '@/app/const';
+import { useTeacherList } from '@/app/myfunctions';
 import { useUser } from '@/providers/UserContext';
-import { Meeting } from '@/app/types/timeslot';
+import { Meeting } from '@/app/interfaces/timeslot';
 import { Form } from '../components/Form';
 import { MeetingList } from '../components/MeetingList';
+import { LoadingIcon } from '@/components/LoadingIcon';
 
 export default function Page() {
 	const [meetings, setMeetings] = useState<Meeting[]>([])
 	const user = useUser();
     const { data: teacherList, error, isLoading } = useTeacherList(user?.school_id)
 	
-	if (!user) return <span className="loading loading-lg"></span>
+	if (!user) return <LoadingIcon/>
     if (error) return <div>{error}</div>;
-    if (isLoading) return <span className="loading loading-lg"></span>
+    if (isLoading) return <LoadingIcon/>
 
 	return (
 		<div className='md:flex gap-4'>

@@ -1,8 +1,9 @@
+import { LoadingIcon } from "./LoadingIcon";
 import { showModal } from "./Modal";
 
 export default function showLoadingModal() {
     showModal({
-        children: <span className="loading loading-spinner loading-lg"></span>,
+        children: <LoadingIcon/>,
         canClose: false,
     });
 }
