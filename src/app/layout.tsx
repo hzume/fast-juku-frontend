@@ -5,6 +5,8 @@ import { PageLayout } from '@/components/PageLayout'
 import { DataFetch } from '@/providers/DataFetch'
 import { ModalManager } from '@/components/Modal'
 import { SWRConfig } from 'swr'
+import Favicon from '/public/images/Metadata/favicon.ico'
+import { SessionProvider } from 'next-auth/react'
 
 
 const inter = Inter({ subsets: ['latin'] })

@@ -1,6 +1,7 @@
 import { Meeting } from "./timeslot";
 
-export interface TimeTableData {
+export interface CreateAttendanceReq {
     content: unknown[],
     meetings: Meeting[],
 }
+

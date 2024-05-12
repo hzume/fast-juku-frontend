@@ -65,9 +65,10 @@ export default function Page({ params }: { params: { id: string } }) {
             })
             mutate()
             alert('変更が完了しました')
+            console.log(updateAttendanceValues)
         }
         catch (err) {
-            console.log(err)
+            console.log(err)            
         }
     }
 

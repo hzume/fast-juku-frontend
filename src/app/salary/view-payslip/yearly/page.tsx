@@ -14,6 +14,10 @@ import { useMonthlyAttendanceList, useYearlyAttendanceList } from "@/app/myfunct
 import { start } from "repl";
 import { Teacher } from "@/app/interfaces/teacher";
 
+interface YearMonth {
+    year: number,
+    month: number
+}
 
 const getBetweenAttendance = (monthlyAttendanceList: MonthlyAttendance[], startYear: string, startMonth: string, endYear: string, endMonth: string) => {
     if (!monthlyAttendanceList || !startYear || !startMonth || !endYear || !endMonth) {
@@ -23,22 +27,22 @@ const getBetweenAttendance = (monthlyAttendanceList: MonthlyAttendance[], startY
         }
     }
     const number_of_months = (Number(endYear) - Number(startYear)) * 12 + (Number(endMonth) - Number(startMonth)) + 1
-    const tobeYearMonthSet = new Set<[Number, Number]>()
+    const tobeYearMonthSet = new Set<YearMonth>()
     for (let i = 0; i < number_of_months; i++) {
         const year = Number(startYear) + Math.floor((Number(startMonth) + i - 1) / 12)
         const month = (Number(startMonth) + i - 1) % 12 + 1
-        tobeYearMonthSet.add([year, month])
+        tobeYearMonthSet.add({year: year, month: month})
     }
 
     const teacherSet = new Set<Teacher>()
-    const existYearMonthSet = new Set<[Number, Number]>()
+    const existYearMonthSet = new Set<YearMonth>()
     for (const monthlyAttendance of monthlyAttendanceList) {
         teacherSet.add(monthlyAttendance.teacher)
-        existYearMonthSet.add([monthlyAttendance.year, monthlyAttendance.month])
+        existYearMonthSet.add({year: monthlyAttendance.year, month:monthlyAttendance.month})
     }
+    console.log(existYearMonthSet)
     const teacherList = Array.from(teacherSet)
-
-    const notExistYearMonthList: [Number, Number][] = []
+    const notExistYearMonthList: YearMonth[] = []
     const tobeYearMonthList = Array.from(tobeYearMonthSet)
     for (const yearMonth of tobeYearMonthList) {
         if (!existYearMonthSet.has(yearMonth)) {
@@ -167,7 +171,7 @@ export default function Page() {
                             <div role="alert" className="alert alert-warning">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
                                 <div className="font-bold">
-                                    警告：{notExistYearMonthList.map(([year, month]) => year + "年" + month + "月").join(", ")}の時間割が未登録です
+                                    警告：{notExistYearMonthList.map(({year, month}) => year + "年" + month + "月").join(", ")}の時間割が未登録です
                                 </div>
                             </div>
                         }
