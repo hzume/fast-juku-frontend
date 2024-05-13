@@ -1,4 +1,7 @@
+"use client"
 import { Meeting } from "@/app/interfaces/timeslot"
+import { useTeacherList } from "@/app/myfunctions"
+import { useUser } from "@/providers/UserContext"
 
 export const MeetingList = ({
     meetings,
@@ -7,16 +10,22 @@ export const MeetingList = ({
     meetings: Meeting[],
     setMeetings: React.Dispatch<React.SetStateAction<Meeting[]>>
 }) => {
+    const user = useUser()
+    const { data: teacherList, error, isLoading } = useTeacherList(user?.school_id)
+    const getDisplayName = (teacher_id: string) => {
+        const teacher = teacherList.find((teacher) => teacher.id === teacher_id)
+        return teacher?.display_name
+    }
     const MeetingTable = ({ meeting }: { meeting: Meeting }) => {
         const onClick = () => {
             setMeetings((prev) => prev.filter((m) => m !== meeting))
         }
-        const attendTeacherNames = meeting.teachers.map((teacher) => (teacher.display_name)).join(', ')
+        const attendTeacherNames = meeting.teacher_ids.map((id) => (getDisplayName(id))).join(', ')
         return (
             <div className="rounded-lg border-black p-4 pt-0 bg-white shadow-xl">
                 <div className="flex justify-between">
                     <div className="font-bold pt-4">
-                        {meeting.year}年 {meeting.month}月 {meeting.day}日  {meeting.start_time.getHours()}:{meeting.start_time.getMinutes()}~{meeting.end_time.getHours()}:{meeting.end_time.getMinutes()}
+                        {meeting.year}年 {meeting.month}月 {meeting.day}日  {meeting.start_time}~{meeting.end_time}
                     </div>
                     <div className="pt-2">
                     <button onClick={onClick} className="btn btn-outline btn-error btn-sm">

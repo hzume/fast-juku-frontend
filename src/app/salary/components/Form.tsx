@@ -6,7 +6,7 @@ import { useUser } from "@/providers/UserContext";
 import { useTeacherList, processXLSX } from "@/app/myfunctions";
 import { C } from "@/app/const";
 import { Teacher } from "@/app/interfaces/teacher";
-import { TimeTableData } from "@/app/interfaces/timetable";
+import { CreateAttendanceReq } from "@/app/interfaces/timetable";
 import { useSession } from "next-auth/react";
 import { time } from "console";
 import { useApiPath } from "@/providers/ApiPathContext";
@@ -69,7 +69,7 @@ export const Form = ({
         const processed_data = processXLSX(workbook, Number(formValues.year), Number(formValues.month));
         const query = new URLSearchParams({ year: formValues.year, month: formValues.month })
         const api_url = new URL(`salary/bulk/${user.school_id}/?${query}`, API_PATH)
-        const timeTableData: TimeTableData = {
+        const timeTableData: CreateAttendanceReq = {
             content: processed_data,
             meetings: meetings,
         }

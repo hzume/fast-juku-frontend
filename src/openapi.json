@@ -1,0 +1,1461 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+      "title": "FastAPI",
+      "version": "0.1.0"
+    },
+    "paths": {
+      "/": {
+        "get": {
+          "summary": "Root",
+          "operationId": "root__get",
+          "responses": {
+            "200": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {
+  
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/test/": {
+        "post": {
+          "summary": "Post Root",
+          "operationId": "post_root_test__post",
+          "requestBody": {
+            "content": {
+              "multipart/form-data": {
+                "schema": {
+                  "$ref": "#/components/schemas/Body_post_root_test__post"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {
+  
+                  }
+                }
+              }
+            },
+            "422": {
+              "description": "Validation Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/HTTPValidationError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/teachers": {
+        "post": {
+          "summary": "Create Teacher",
+          "operationId": "create_teacher_teachers_post",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherBase"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "201": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Teacher"
+                  }
+                }
+              }
+            },
+            "422": {
+              "description": "Validation Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/HTTPValidationError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/teachers/bulk/{school_id}": {
+        "post": {
+          "summary": "Create Teachers From Csv",
+          "operationId": "create_teachers_from_csv_teachers_bulk__school_id__post",
+          "parameters": [
+            {
+              "name": "school_id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "title": "School Id"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "multipart/form-data": {
+                "schema": {
+                  "$ref": "#/components/schemas/Body_create_teachers_from_csv_teachers_bulk__school_id__post"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Teacher"
+                    },
+                    "title": "Response Create Teachers From Csv Teachers Bulk  School Id  Post"
+                  }
+                }
+              }
+            },
+            "422": {
+              "description": "Validation Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/HTTPValidationError"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "get": {
+          "summary": "List Teachers",
+          "operationId": "list_teachers_teachers_bulk__school_id__get",
+          "parameters": [
+            {
+              "name": "school_id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "title": "School Id"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Teacher"
+                    },
+                    "title": "Response List Teachers Teachers Bulk  School Id  Get"
+                  }
+                }
+              }
+            },
+            "422": {
+              "description": "Validation Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/HTTPValidationError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/teachers/{id}": {
+        "get": {
+          "summary": "Get Teacher",
+          "operationId": "get_teacher_teachers__id__get",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "title": "Id"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Teacher"
+                  }
+                }
+              }
+            },
+            "422": {
+              "description": "Validation Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/HTTPValidationError"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "summary": "Update Teacher",
+          "operationId": "update_teacher_teachers__id__put",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "title": "Id"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherBase"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Teacher"
+                  }
+                }
+              }
+            },
+            "422": {
+              "description": "Validation Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/HTTPValidationError"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete Teacher",
+          "operationId": "delete_teacher_teachers__id__delete",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "title": "Id"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Teacher"
+                  }
+                }
+              }
+            },
+            "422": {
+              "description": "Validation Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/HTTPValidationError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/teachers/sub/{sub}": {
+        "get": {
+          "summary": "Get Teacher From Sub",
+          "operationId": "get_teacher_from_sub_teachers_sub__sub__get",
+          "parameters": [
+            {
+              "name": "sub",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "title": "Sub"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Teacher"
+                  }
+                }
+              }
+            },
+            "422": {
+              "description": "Validation Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/HTTPValidationError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/salary/{id}": {
+        "get": {
+          "summary": "Get Monthly Salary",
+          "operationId": "get_monthly_salary_salary__id__get",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "title": "Id"
+              }
+            },
+            {
+              "name": "year",
+              "in": "query",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "title": "Year"
+              }
+            },
+            {
+              "name": "month",
+              "in": "query",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "title": "Month"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/MonthlyAttendance"
+                  }
+                }
+              }
+            },
+            "422": {
+              "description": "Validation Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/HTTPValidationError"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "summary": "Update Monthly Salary",
+          "operationId": "update_monthly_salary_salary__id__put",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "title": "Id"
+              }
+            },
+            {
+              "name": "year",
+              "in": "query",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "title": "Year"
+              }
+            },
+            {
+              "name": "month",
+              "in": "query",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "title": "Month"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateAttendanceReq"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/MonthlyAttendance"
+                  }
+                }
+              }
+            },
+            "422": {
+              "description": "Validation Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/HTTPValidationError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/salary/bulk/{school_id}": {
+        "get": {
+          "summary": "Get Monthly Salary List",
+          "operationId": "get_monthly_salary_list_salary_bulk__school_id__get",
+          "parameters": [
+            {
+              "name": "school_id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "title": "School Id"
+              }
+            },
+            {
+              "name": "year",
+              "in": "query",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "title": "Year"
+              }
+            },
+            {
+              "name": "month",
+              "in": "query",
+              "required": false,
+              "schema": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Month"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/MonthlyAttendance"
+                    },
+                    "title": "Response Get Monthly Salary List Salary Bulk  School Id  Get"
+                  }
+                }
+              }
+            },
+            "422": {
+              "description": "Validation Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/HTTPValidationError"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete Monthly Salary List",
+          "operationId": "delete_monthly_salary_list_salary_bulk__school_id__delete",
+          "parameters": [
+            {
+              "name": "school_id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "title": "School Id"
+              }
+            },
+            {
+              "name": "year",
+              "in": "query",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "title": "Year"
+              }
+            },
+            {
+              "name": "month",
+              "in": "query",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "title": "Month"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/MonthlyAttendance"
+                    },
+                    "title": "Response Delete Monthly Salary List Salary Bulk  School Id  Delete"
+                  }
+                }
+              }
+            },
+            "422": {
+              "description": "Validation Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/HTTPValidationError"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Create Timeslots From Class Sheet",
+          "operationId": "create_timeslots_from_class_sheet_salary_bulk__school_id__post",
+          "parameters": [
+            {
+              "name": "school_id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "title": "School Id"
+              }
+            },
+            {
+              "name": "year",
+              "in": "query",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "title": "Year"
+              }
+            },
+            {
+              "name": "month",
+              "in": "query",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "title": "Month"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateAttendanceReq"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/MonthlyAttendance"
+                    },
+                    "title": "Response Create Timeslots From Class Sheet Salary Bulk  School Id  Post"
+                  }
+                }
+              }
+            },
+            "422": {
+              "description": "Validation Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/HTTPValidationError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/salary/bulk/{school_id}/between": {
+        "get": {
+          "summary": "Get Monthly Salary List Between",
+          "operationId": "get_monthly_salary_list_between_salary_bulk__school_id__between_get",
+          "parameters": [
+            {
+              "name": "school_id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "title": "School Id"
+              }
+            },
+            {
+              "name": "start_year",
+              "in": "query",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "title": "Start Year"
+              }
+            },
+            {
+              "name": "start_month",
+              "in": "query",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "title": "Start Month"
+              }
+            },
+            {
+              "name": "end_year",
+              "in": "query",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "title": "End Year"
+              }
+            },
+            {
+              "name": "end_month",
+              "in": "query",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "title": "End Month"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/MonthlyAttendance"
+                    },
+                    "title": "Response Get Monthly Salary List Between Salary Bulk  School Id  Between Get"
+                  }
+                }
+              }
+            },
+            "422": {
+              "description": "Validation Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/HTTPValidationError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/metas": {
+        "get": {
+          "summary": "List Metas",
+          "operationId": "list_metas_metas_get",
+          "responses": {
+            "200": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "items": {
+                      "$ref": "#/components/schemas/Meta"
+                    },
+                    "type": "array",
+                    "title": "Response List Metas Metas Get"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Create Meta",
+          "operationId": "create_meta_metas_post",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MetaBase"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "201": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Meta"
+                  }
+                }
+              }
+            },
+            "422": {
+              "description": "Validation Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/HTTPValidationError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/metas/{school_id}": {
+        "get": {
+          "summary": "Get Meta",
+          "operationId": "get_meta_metas__school_id__get",
+          "parameters": [
+            {
+              "name": "school_id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "title": "School Id"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Meta"
+                  }
+                }
+              }
+            },
+            "422": {
+              "description": "Validation Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/HTTPValidationError"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "summary": "Update Meta",
+          "operationId": "update_meta_metas__school_id__put",
+          "parameters": [
+            {
+              "name": "school_id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "title": "School Id"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MetaBase"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Meta"
+                  }
+                }
+              }
+            },
+            "422": {
+              "description": "Validation Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/HTTPValidationError"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete Meta",
+          "operationId": "delete_meta_metas__school_id__delete",
+          "parameters": [
+            {
+              "name": "school_id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "title": "School Id"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Meta"
+                  }
+                }
+              }
+            },
+            "422": {
+              "description": "Validation Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/HTTPValidationError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Body_create_teachers_from_csv_teachers_bulk__school_id__post": {
+          "properties": {
+            "file": {
+              "type": "string",
+              "format": "binary",
+              "title": "File"
+            }
+          },
+          "type": "object",
+          "required": [
+            "file"
+          ],
+          "title": "Body_create_teachers_from_csv_teachers_bulk__school_id__post"
+        },
+        "Body_post_root_test__post": {
+          "properties": {
+            "file": {
+              "type": "string",
+              "format": "binary",
+              "title": "File"
+            }
+          },
+          "type": "object",
+          "required": [
+            "file"
+          ],
+          "title": "Body_post_root_test__post"
+        },
+        "CreateAttendanceReq": {
+          "properties": {
+            "content": {
+              "items": {
+                "items": {
+                  "items": {
+  
+                  },
+                  "type": "array"
+                },
+                "type": "array"
+              },
+              "type": "array",
+              "title": "Content"
+            },
+            "meetings": {
+              "items": {
+                "$ref": "#/components/schemas/Meeting"
+              },
+              "type": "array",
+              "title": "Meetings"
+            }
+          },
+          "type": "object",
+          "required": [
+            "content",
+            "meetings"
+          ],
+          "title": "CreateAttendanceReq"
+        },
+        "HTTPValidationError": {
+          "properties": {
+            "detail": {
+              "items": {
+                "$ref": "#/components/schemas/ValidationError"
+              },
+              "type": "array",
+              "title": "Detail"
+            }
+          },
+          "type": "object",
+          "title": "HTTPValidationError"
+        },
+        "Meeting": {
+          "properties": {
+            "year": {
+              "type": "integer",
+              "title": "Year"
+            },
+            "month": {
+              "type": "integer",
+              "title": "Month"
+            },
+            "day": {
+              "type": "integer",
+              "title": "Day"
+            },
+            "start_time": {
+              "type": "string",
+              "title": "Start Time"
+            },
+            "end_time": {
+              "type": "string",
+              "title": "End Time"
+            },
+            "teacher_ids": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array",
+              "title": "Teacher Ids"
+            }
+          },
+          "type": "object",
+          "required": [
+            "year",
+            "month",
+            "day",
+            "start_time",
+            "end_time",
+            "teacher_ids"
+          ],
+          "title": "Meeting"
+        },
+        "Meta": {
+          "properties": {
+            "school_name": {
+              "type": "string",
+              "title": "School Name"
+            },
+            "school_id": {
+              "type": "string",
+              "title": "School Id"
+            }
+          },
+          "type": "object",
+          "required": [
+            "school_name",
+            "school_id"
+          ],
+          "title": "Meta"
+        },
+        "MetaBase": {
+          "properties": {
+            "school_name": {
+              "type": "string",
+              "title": "School Name"
+            }
+          },
+          "type": "object",
+          "required": [
+            "school_name"
+          ],
+          "title": "MetaBase"
+        },
+        "MonthlyAttendance": {
+          "properties": {
+            "year": {
+              "type": "integer",
+              "title": "Year"
+            },
+            "month": {
+              "type": "integer",
+              "title": "Month"
+            },
+            "teacher": {
+              "$ref": "#/components/schemas/Teacher"
+            },
+            "timeslot_list": {
+              "items": {
+                "$ref": "#/components/schemas/Timeslot"
+              },
+              "type": "array",
+              "title": "Timeslot List"
+            },
+            "extra_payment": {
+              "type": "integer",
+              "title": "Extra Payment",
+              "default": 0
+            },
+            "remark": {
+              "type": "string",
+              "title": "Remark",
+              "default": ""
+            },
+            "daily_lecture_amount": {
+              "items": {
+                "type": "integer"
+              },
+              "type": "array",
+              "title": "Daily Lecture Amount",
+              "default": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            },
+            "daily_officework_amount": {
+              "items": {
+                "type": "integer"
+              },
+              "type": "array",
+              "title": "Daily Officework Amount",
+              "default": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            },
+            "daily_latenight_amount": {
+              "items": {
+                "type": "integer"
+              },
+              "type": "array",
+              "title": "Daily Latenight Amount",
+              "default": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            },
+            "daily_over_eight_hour_amount": {
+              "items": {
+                "type": "integer"
+              },
+              "type": "array",
+              "title": "Daily Over Eight Hour Amount",
+              "default": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            },
+            "daily_attendance": {
+              "items": {
+                "type": "boolean"
+              },
+              "type": "array",
+              "title": "Daily Attendance",
+              "default": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+            },
+            "monthly_gross_salary": {
+              "type": "integer",
+              "title": "Monthly Gross Salary",
+              "default": 0
+            },
+            "monthly_tax_amount": {
+              "type": "integer",
+              "title": "Monthly Tax Amount",
+              "default": 0
+            },
+            "monthly_trans_fee": {
+              "type": "integer",
+              "title": "Monthly Trans Fee",
+              "default": 0
+            }
+          },
+          "type": "object",
+          "required": [
+            "year",
+            "month",
+            "teacher",
+            "timeslot_list"
+          ],
+          "title": "MonthlyAttendance"
+        },
+        "Teacher": {
+          "properties": {
+            "display_name": {
+              "type": "string",
+              "title": "Display Name"
+            },
+            "given_name": {
+              "type": "string",
+              "title": "Given Name"
+            },
+            "family_name": {
+              "type": "string",
+              "title": "Family Name"
+            },
+            "school_id": {
+              "type": "string",
+              "title": "School Id"
+            },
+            "lecture_hourly_pay": {
+              "type": "number",
+              "title": "Lecture Hourly Pay"
+            },
+            "office_hourly_pay": {
+              "type": "number",
+              "title": "Office Hourly Pay"
+            },
+            "trans_fee": {
+              "type": "number",
+              "title": "Trans Fee",
+              "default": 0
+            },
+            "fixed_salary": {
+              "type": "number",
+              "title": "Fixed Salary",
+              "default": 0
+            },
+            "teacher_type": {
+              "type": "string",
+              "enum": [
+                "teacher",
+                "admin"
+              ],
+              "title": "Teacher Type"
+            },
+            "sub": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Sub"
+            },
+            "id": {
+              "type": "string",
+              "title": "Id"
+            }
+          },
+          "type": "object",
+          "required": [
+            "display_name",
+            "given_name",
+            "family_name",
+            "school_id",
+            "lecture_hourly_pay",
+            "office_hourly_pay",
+            "teacher_type",
+            "id"
+          ],
+          "title": "Teacher"
+        },
+        "TeacherBase": {
+          "properties": {
+            "display_name": {
+              "type": "string",
+              "title": "Display Name"
+            },
+            "given_name": {
+              "type": "string",
+              "title": "Given Name"
+            },
+            "family_name": {
+              "type": "string",
+              "title": "Family Name"
+            },
+            "school_id": {
+              "type": "string",
+              "title": "School Id"
+            },
+            "lecture_hourly_pay": {
+              "type": "number",
+              "title": "Lecture Hourly Pay"
+            },
+            "office_hourly_pay": {
+              "type": "number",
+              "title": "Office Hourly Pay"
+            },
+            "trans_fee": {
+              "type": "number",
+              "title": "Trans Fee",
+              "default": 0
+            },
+            "fixed_salary": {
+              "type": "number",
+              "title": "Fixed Salary",
+              "default": 0
+            },
+            "teacher_type": {
+              "type": "string",
+              "enum": [
+                "teacher",
+                "admin"
+              ],
+              "title": "Teacher Type"
+            },
+            "sub": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Sub"
+            }
+          },
+          "type": "object",
+          "required": [
+            "display_name",
+            "given_name",
+            "family_name",
+            "school_id",
+            "lecture_hourly_pay",
+            "office_hourly_pay",
+            "teacher_type"
+          ],
+          "title": "TeacherBase"
+        },
+        "Timeslot": {
+          "properties": {
+            "day": {
+              "type": "integer",
+              "title": "Day"
+            },
+            "start_time": {
+              "type": "string",
+              "format": "date-time",
+              "title": "Start Time"
+            },
+            "end_time": {
+              "type": "string",
+              "format": "date-time",
+              "title": "End Time"
+            },
+            "timeslot_number": {
+              "type": "integer",
+              "title": "Timeslot Number"
+            },
+            "timeslot_type": {
+              "type": "string",
+              "enum": [
+                "lecture",
+                "office_work",
+                "other"
+              ],
+              "title": "Timeslot Type"
+            }
+          },
+          "type": "object",
+          "required": [
+            "day",
+            "start_time",
+            "end_time",
+            "timeslot_number",
+            "timeslot_type"
+          ],
+          "title": "Timeslot"
+        },
+        "TimeslotJS": {
+          "properties": {
+            "year": {
+              "type": "integer",
+              "title": "Year"
+            },
+            "month": {
+              "type": "integer",
+              "title": "Month"
+            },
+            "day": {
+              "type": "integer",
+              "title": "Day"
+            },
+            "timeslot_number": {
+              "type": "integer",
+              "title": "Timeslot Number"
+            },
+            "timeslot_type": {
+              "type": "string",
+              "enum": [
+                "lecture",
+                "office_work",
+                "other"
+              ],
+              "title": "Timeslot Type"
+            }
+          },
+          "type": "object",
+          "required": [
+            "year",
+            "month",
+            "day",
+            "timeslot_number",
+            "timeslot_type"
+          ],
+          "title": "TimeslotJS"
+        },
+        "UpdateAttendanceReq": {
+          "properties": {
+            "timeslot_js_list": {
+              "items": {
+                "$ref": "#/components/schemas/TimeslotJS"
+              },
+              "type": "array",
+              "title": "Timeslot Js List"
+            },
+            "extra_payment": {
+              "type": "integer",
+              "title": "Extra Payment"
+            },
+            "remark": {
+              "type": "string",
+              "title": "Remark"
+            },
+            "teacher": {
+              "$ref": "#/components/schemas/Teacher"
+            }
+          },
+          "type": "object",
+          "required": [
+            "timeslot_js_list",
+            "extra_payment",
+            "remark",
+            "teacher"
+          ],
+          "title": "UpdateAttendanceReq"
+        },
+        "ValidationError": {
+          "properties": {
+            "loc": {
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "integer"
+                  }
+                ]
+              },
+              "type": "array",
+              "title": "Location"
+            },
+            "msg": {
+              "type": "string",
+              "title": "Message"
+            },
+            "type": {
+              "type": "string",
+              "title": "Error Type"
+            }
+          },
+          "type": "object",
+          "required": [
+            "loc",
+            "msg",
+            "type"
+          ],
+          "title": "ValidationError"
+        }
+      }
+    }
+  }

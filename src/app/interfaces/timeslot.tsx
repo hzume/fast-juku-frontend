@@ -1,16 +1,12 @@
 import { Teacher } from "./teacher";
 
 export interface Meeting {
-    school_id: string,
     year: number,
     month: number,
     day: number,
-    start_time: Date,
-    end_time: Date,
-    timeslot_type: string,
-    timeslot_number: number,
-
-    teachers: Teacher[],
+    start_time: string,
+    end_time: string,
+    teacher_ids: string[],
 }
 
 export interface Timeslot {
