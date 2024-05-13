@@ -2,7 +2,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import path from "path";
-import { AuthButton } from "@/app/dev-menu/a";
 
 export default function Page() {
   const current_path = usePathname();
@@ -20,7 +19,6 @@ export default function Page() {
           <Link href={list_metas_path}>学校情報を列挙</Link>
         </li>
       </ul>
-      <AuthButton />
     </div>
   );
 }

@@ -1,5 +1,7 @@
 import { C } from "@/app/const";
+import { profile } from "console";
 import NextAuth, { NextAuthOptions } from "next-auth";
+import { getToken } from "next-auth/jwt";
 import CognitoProvider from "next-auth/providers/cognito";
 
 export const authOptions: NextAuthOptions = {
@@ -15,14 +17,11 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   callbacks: {
-    jwt: async ({ user, token }) => {
-      if (user) {
-        token.id = user.id;
-      }
+    jwt: async ({ token, account, profile, user }) => {
       return token;
     },
     session: async ({ session, token }) => {
-      session.user!.id = token.id;
+      session.user!.id = token.sub!;
       return session;
     },
   },  

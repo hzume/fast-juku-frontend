@@ -43,17 +43,12 @@ const CreateMeetingModal = ({
             }
         }
         const meeting: Meeting = {
-            school_id: user?.school_id!,
             year: Number(formValues.year),
             month: Number(formValues.month),
             day: Number(data.day),
-            //@ts-ignore
-            start_time: data.start_time, 
-            //@ts-ignore
-            end_time: data.end_time, 
-            timeslot_type: "office_work",
-            timeslot_number: 0,
-            teachers: attendTeacherList,
+            start_time: data.start_time.toString(), 
+            end_time: data.end_time.toString(), 
+            teacher_ids: attendTeacherList.map((teacher) => teacher.id),
         }
         setMeetings((prev) => [...prev, meeting])
         closeModal()
